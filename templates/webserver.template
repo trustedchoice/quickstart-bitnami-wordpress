@@ -29,6 +29,16 @@
                 },
                 {
                     "Label": {
+                        "default": "DNS and SSL Configuration"
+                    },
+                    "Parameters": [
+                        "DomainName",
+                        "SSLCertificateId",
+                        "HostedZoneID"
+                    ]
+                },
+                {
+                    "Label": {
                         "default": "WordPress Webserver Configuration"
                     },
                     "Parameters": [
@@ -232,16 +242,29 @@
             "Description": "ALB Security Group",
             "Type": "AWS::EC2::SecurityGroup::Id"
         },
-        "SSLCertificateId": {
+        "DomainName": {
+            "Description": "(Optional) Domain name for the web site",
+            "Type": "String",
             "Default": "",
-            "Description": "(Optional) The ARN of the SSL certificate to use for the load balancer",
-            "Type": "String"
+            "AllowedPattern": "^((\\w+\\.)+\\w+){0,1}$",
+            "ConstraintDescription": "Must be a valid domain name."
+        },
+        "SSLCertificateId": {
+            "Description": "(Optional) The ARN of the SSL certificate to use for the load balancer. If not specified, the certificate will be auto-generated",
+            "Type": "String",
+            "Default": ""
+        },
+        "HostedZoneID": {
+            "Description": "(Optional) Route 53 Hosted Zone ID of the domain name. If left blank route 53 will not be configured and DNS must be setup manually. If you specify this, you must also specify a Domain name",
+            "Type": "String",
+            "Default": "",
+            "MaxLength": "32"
         }
     },
     "Mappings": {
         "RegionMap": {
             "us-east-1": {
-                "AMI": "ami-0bb8a73517980289b"
+                "AMI": "ami-03d0dd5c28a8370f0"
             },
             "us-east-2": {
                 "AMI": "ami-07fc938ad607a5045"
@@ -263,26 +286,41 @@
             }
         }
     },
+    "Rules": {
+        "DomainNameIsPresentIfHostedZoneIDRule": {
+            "Assertions": [
+                {
+                    "Assert": {
+                        "Fn::Or": [
+                          { "Fn::Equals" : [ { "Ref" : "HostedZoneID" }, "" ] },
+                          { "Fn::Not": [ { "Fn::Equals" : [ { "Ref" : "DomainName" }, "" ] } ] } ]
+                    },
+                    "AssertDescription": "Please specify a 'Domain Name' if you specify 'Route 53 Hosted Zone ID'"
+                }
+            ]
+        }
+    },
     "Conditions": {
         "UseSSL": {
-            "Fn::Not": [
-                {
-                    "Fn::Equals": [
-                        {
-                            "Ref": "SSLCertificateId"
-                        },
-                        ""
-                    ]
-                }
+            "Fn::Or": [
+                { "Fn::Not": [ { "Fn::Equals": [ { "Ref": "DomainName" }, "" ] } ] },
+                { "Fn::Not": [ { "Fn::Equals": [ { "Ref": "SSLCertificateId" }, "" ] } ] }
+            ]
+        },
+        "GenerateSSLCertificate": {
+            "Fn::And": [
+                { "Condition": "UseSSL" },
+                { "Fn::Equals": [ { "Ref": "SSLCertificateId" }, "" ] }
+            ]
+        },
+        "AddDNSRecord": {
+            "Fn::And": [
+                { "Fn::Not": [ { "Fn::Equals": [ { "Ref": "DomainName" }, "" ] } ] },
+                { "Fn::Not": [ { "Fn::Equals": [ { "Ref": "HostedZoneID" }, "" ] } ] }
             ]
         },
         "EnableInstanceMonitoring": {
-            "Fn::Equals": [
-                {
-                    "Ref": "WebServerInstanceMonitoring"
-                },
-                "Enabled"
-            ]
+            "Fn::Equals": [ { "Ref": "WebServerInstanceMonitoring" }, "Enabled" ]
         }
     },
     "Resources": {
@@ -339,6 +377,30 @@
                         "Ref": "EFSSecurityGroup"
                     }
                 ]
+            }
+        },
+        "Route53RecordSet": {
+            "Condition": "AddDNSRecord",
+            "Type": "AWS::Route53::RecordSet",
+            "Properties": {
+                "Type": "A",
+                "Name": { "Ref": "DomainName" },
+                "AliasTarget": {
+                    "HostedZoneId": { "Fn::GetAtt": [ "ApplicationLoadBalancer", "CanonicalHostedZoneID" ] },
+                    "DNSName": { "Fn::GetAtt": [ "ApplicationLoadBalancer", "DNSName" ] }
+                },
+                "HostedZoneId": { "Ref": "HostedZoneID" }
+            }
+        },
+        "ACMCertificate": {
+            "Condition": "GenerateSSLCertificate",
+            "Type": "AWS::CertificateManager::Certificate",
+            "Properties": {
+                "DomainName": { "Ref": "DomainName" },
+                "DomainValidationOptions": [ {
+                    "DomainName": { "Ref": "DomainName" },
+                    "ValidationDomain": { "Ref": "DomainName" }
+                } ]
             }
         },
         "ApplicationLoadBalancer": {
@@ -409,34 +471,20 @@
                 "LoadBalancerArn": {
                     "Ref": "ApplicationLoadBalancer"
                 },
-                "Port": {
-                    "Fn::If": [
-                        "UseSSL",
-                        443,
-                        80
-                    ]
-                },
-                "Protocol": {
-                    "Fn::If": [
-                        "UseSSL",
-                        "HTTPS",
-                        "HTTP"
-                    ]
-                },
+                "Port": { "Fn::If": [ "UseSSL", 443, 80 ] },
+                "Protocol": { "Fn::If": [ "UseSSL", "HTTPS", "HTTP" ] },
                 "Certificates": [
-                    {
-                        "Fn::If": [
-                            "UseSSL",
-                            {
-                                "CertificateArn": {
-                                    "Ref": "SSLCertificateId"
-                                }
-                            },
-                            {
-                                "Ref": "AWS::NoValue"
+                    { "Fn::If": [ "UseSSL",
+                        {
+                            "CertificateArn": {
+                                "Fn::If": [ "GenerateSSLCertificate",
+                                    { "Ref": "ACMCertificate" },
+                                    { "Ref": "SSLCertificateId" }
+                                ]
                             }
-                        ]
-                    }
+                        },
+                        { "Ref": "AWS::NoValue" }
+                    ] }
                 ]
             }
         },
@@ -569,9 +617,11 @@
                                 "\n# PROVISIONER_EFS_URI=", {
                                     "Fn::Sub": "${WordpressEFS}.efs.${AWS::Region}.amazonaws.com:/"
                                 },
-                                "\n# PROVISIONER_PUBLIC_URL=", { "Fn::If": [ "UseSSL", "https://", "http://" ] }, {
-                                    "Fn::GetAtt": [ "ApplicationLoadBalancer", "DNSName" ]
-                                },
+                                "\n# PROVISIONER_PUBLIC_URL=", { "Fn::If": [ "UseSSL", "https://", "http://" ] },
+                                { "Fn::If": [ "AddDNSRecord",
+                                    { "Ref": "DomainName" },
+                                    { "Fn::GetAtt": [ "ApplicationLoadBalancer", "DNSName" ] }
+                                ] },
                                 "\n# PROVISIONER_TIER=frontend_ha",
                                 "\n# PROVISIONER_PEER_ADDRESS=", { "Ref": "DBEndpointAddress" }
                             ]
@@ -628,27 +678,23 @@
         }
     },
     "Outputs": {
-        "ELBURL": {
-            "Description": "The URL of the ELB that you should use to create a CNAME/ALIAS DNS record to point to your Domain e.g. mysite.com",
+        "APPURL": {
+            "Condition": "AddDNSRecord",
+            "Description": "The URL to access the web application",
             "Value": {
-                "Fn::Join": [
-                    "",
-                    [
-                        {
-                            "Fn::If": [
-                                "UseSSL",
-                                "https://",
-                                "http://"
-                            ]
-                        },
-                        {
-                            "Fn::GetAtt": [
-                                "ApplicationLoadBalancer",
-                                "DNSName"
-                            ]
-                        }
-                    ]
-                ]
+                "Fn::Join": [ "", [
+                    { "Fn::If": [ "UseSSL", "https://", "http://" ] },
+                    { "Ref": "DomainName" }
+                ] ]
+            }
+        },
+        "ELBURL": {
+            "Description": "The URL of the ELB. Point your domain to it by using a CNAME/ALIAS DNS record",
+            "Value": {
+                "Fn::Join": [ "", [
+                    { "Fn::If": [ "UseSSL", "https://", "http://" ] },
+                    { "Fn::GetAtt": [ "ApplicationLoadBalancer", "DNSName" ] }
+                ] ]
             }
         }
     }
