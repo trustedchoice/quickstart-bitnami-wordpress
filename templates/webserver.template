@@ -264,25 +264,25 @@
     "Mappings": {
         "RegionMap": {
             "us-east-1": {
-                "AMI": "ami-03d0dd5c28a8370f0"
+                "AMI": "ami-01e5fd0acd997cd6b"
             },
             "us-east-2": {
-                "AMI": "ami-07fc938ad607a5045"
+                "AMI": "ami-04f64cadb5a30a34a"
             },
             "us-west-1": {
-                "AMI": "ami-0e2a9853ae97a733d"
+                "AMI": "ami-057021850fbe31874"
             },
             "us-west-2": {
-                "AMI": "ami-0e9601c3c54d3834d"
+                "AMI": "ami-09f9614d2c31e7672"
             },
             "eu-central-1": {
-                "AMI": "ami-08c2b458438493972"
+                "AMI": "ami-0d806601938b047f2"
             },
             "eu-west-1": {
-                "AMI": "ami-0cd6e03e0e033ecf2"
+                "AMI": "ami-0cc85d85717646d1b"
             },
             "ap-southeast-2": {
-                "AMI": "ami-08c3cfd501dec86e8"
+                "AMI": "ami-069f16cec0012e324"
             }
         }
     },
