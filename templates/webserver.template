@@ -262,27 +262,27 @@
         }
     },
     "Mappings": {
-        "RegionMap": {
+        "AWSAMIRegionMap": {
             "us-east-1": {
-                "AMI": "ami-01e5fd0acd997cd6b"
+                "BITNAMIWP": "ami-01e5fd0acd997cd6b"
             },
             "us-east-2": {
-                "AMI": "ami-04f64cadb5a30a34a"
+                "BITNAMIWP": "ami-04f64cadb5a30a34a"
             },
             "us-west-1": {
-                "AMI": "ami-057021850fbe31874"
+                "BITNAMIWP": "ami-057021850fbe31874"
             },
             "us-west-2": {
-                "AMI": "ami-09f9614d2c31e7672"
+                "BITNAMIWP": "ami-09f9614d2c31e7672"
             },
             "eu-central-1": {
-                "AMI": "ami-0d806601938b047f2"
+                "BITNAMIWP": "ami-0d806601938b047f2"
             },
             "eu-west-1": {
-                "AMI": "ami-0cc85d85717646d1b"
+                "BITNAMIWP": "ami-0cc85d85717646d1b"
             },
             "ap-southeast-2": {
-                "AMI": "ami-069f16cec0012e324"
+                "BITNAMIWP": "ami-069f16cec0012e324"
             }
         }
     },
@@ -587,11 +587,11 @@
             "Properties": {
                 "ImageId": {
                     "Fn::FindInMap": [
-                        "RegionMap",
+                        "AWSAMIRegionMap",
                         {
                             "Ref": "AWS::Region"
                         },
-                        "AMI"
+                        "BITNAMIWP"
                     ]
                 },
                 "UserData": {
