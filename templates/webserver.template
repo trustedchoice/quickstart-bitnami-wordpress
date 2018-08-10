@@ -119,6 +119,12 @@
                 "m5.4xlarge",
                 "m5.12xlarge",
                 "m5.24xlarge",
+                "m5d.large",
+                "m5d.xlarge",
+                "m5d.2xlarge",
+                "m5d.4xlarge",
+                "m5d.12xlarge",
+                "m5d.24xlarge",
                 "c3.large",
                 "c3.xlarge",
                 "c3.2xlarge",
@@ -135,6 +141,12 @@
                 "c5.4xlarge",
                 "c5.9xlarge",
                 "c5.18xlarge",
+                "c5d.large",
+                "c5d.xlarge",
+                "c5d.2xlarge",
+                "c5d.4xlarge",
+                "c5d.9xlarge",
+                "c5d.18xlarge",
                 "r3.large",
                 "r3.xlarge",
                 "r3.2xlarge",
@@ -566,7 +578,7 @@
                 "AWS::CloudFormation::Init" : {
                     "config": {
                         "files": {
-                            "/tmp/secret": {
+                            "/opt/bitnami/var/cfn-user-data": {
                                 "content": {
                                     "Fn::Join": [
                                         "",
@@ -600,20 +612,18 @@
                             "",
                             [
                                 "#!/bin/bash\n",
-                                "sudo cfn-init -v",
-                                " --stack ", { "Ref": "AWS::StackName" },
-                                " --resource WebServerLC",
-                                " --region ", { "Ref": "AWS::Region" }, "\n",
-                                "\n# USER_DATA_FILE=/tmp/secret",
+                                "\n# PROVISIONER_CFN_INIT_ENABLED=true",
+                                "\n# PROVISIONER_CFN_INIT_RESOURCE=WebServerLC",
+                                "\n# PROVISIONER_CFN_INIT_FILE_PATH=/opt/bitnami/var/cfn-user-data",
+                                "\n# PROVISIONER_CFN_RESOURCE=WebServerASG",
+                                "\n# PROVISIONER_CFN_STACK=", { "Ref": "AWS::StackName" },
+                                "\n# PROVISIONER_CFN_REGION=", { "Ref": "AWS::Region" },
                                 "\n# PROVISIONER_PEER_PASSWORD_INPUT=", { "Ref": "AWS::AccountId" },
                                 " ", { "Ref": "AWS::StackId" },
                                 " ", { "Ref": "AWS::Region" },
                                 "\n# PROVISIONER_SHARED_UNIQUE_ID_INPUT=", { "Ref": "AWS::AccountId" },
                                 " ", { "Ref": "AWS::StackId" },
                                 " ", { "Ref": "AWS::Region" },
-                                "\n# PROVISIONER_CFN_RESOURCE=WebServerASG",
-                                "\n# PROVISIONER_CFN_STACK=", { "Ref": "AWS::StackName" },
-                                "\n# PROVISIONER_CFN_REGION=", { "Ref": "AWS::Region" },
                                 "\n# PROVISIONER_EFS_URI=", {
                                     "Fn::Sub": "${WordpressEFS}.efs.${AWS::Region}.amazonaws.com:/"
                                 },
