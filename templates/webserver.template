@@ -276,25 +276,25 @@
     "Mappings": {
         "AWSAMIRegionMap": {
             "us-east-1": {
-                "BITNAMIWP": "ami-01e5fd0acd997cd6b"
+                "BITNAMIWP": "ami-031f6afed3d897c71"
             },
             "us-east-2": {
-                "BITNAMIWP": "ami-04f64cadb5a30a34a"
+                "BITNAMIWP": "ami-03a02f83490a69cbf"
             },
             "us-west-1": {
-                "BITNAMIWP": "ami-057021850fbe31874"
+                "BITNAMIWP": "ami-0148383d8d34439d0"
             },
             "us-west-2": {
-                "BITNAMIWP": "ami-09f9614d2c31e7672"
+                "BITNAMIWP": "ami-08d52c79543040061"
             },
             "eu-central-1": {
-                "BITNAMIWP": "ami-0d806601938b047f2"
+                "BITNAMIWP": "ami-0fbb32e84a2d85f19"
             },
             "eu-west-1": {
-                "BITNAMIWP": "ami-0cc85d85717646d1b"
+                "BITNAMIWP": "ami-0245bf95d9daeb0b9"
             },
             "ap-southeast-2": {
-                "BITNAMIWP": "ami-069f16cec0012e324"
+                "BITNAMIWP": "ami-0bfa4ed58077ebabf"
             }
         }
     },
