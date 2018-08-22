@@ -276,7 +276,7 @@
     "Mappings": {
         "AWSAMIRegionMap": {
             "AMI":{
-                "BITNAMIWP":"bitnami-wordpress-4.9.8-1-linux-debian-9-x86_64-high-availability-nami-hvm-ebs"
+                "BITNAMIWP":"bitnami-wordpress-XXX-linux-debian-9-x86_64-high-availability-nami-hvm-ebs"
             },
             "us-east-1": {
                 "BITNAMIWP": "ami-031f6afed3d897c71"
