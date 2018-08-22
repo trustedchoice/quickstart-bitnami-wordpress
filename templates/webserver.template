@@ -119,6 +119,12 @@
                 "m5.4xlarge",
                 "m5.12xlarge",
                 "m5.24xlarge",
+                "m5d.large",
+                "m5d.xlarge",
+                "m5d.2xlarge",
+                "m5d.4xlarge",
+                "m5d.12xlarge",
+                "m5d.24xlarge",
                 "c3.large",
                 "c3.xlarge",
                 "c3.2xlarge",
@@ -135,6 +141,12 @@
                 "c5.4xlarge",
                 "c5.9xlarge",
                 "c5.18xlarge",
+                "c5d.large",
+                "c5d.xlarge",
+                "c5d.2xlarge",
+                "c5d.4xlarge",
+                "c5d.9xlarge",
+                "c5d.18xlarge",
                 "r3.large",
                 "r3.xlarge",
                 "r3.2xlarge",
@@ -267,25 +279,25 @@
                 "BITNAMIWP":"bitnami-wordpress-4.9.8-1-linux-debian-9-x86_64-high-availability-nami-hvm-ebs"
             },
             "us-east-1": {
-                "BITNAMIWP": "ami-01e5fd0acd997cd6b"
+                "BITNAMIWP": "ami-031f6afed3d897c71"
             },
             "us-east-2": {
-                "BITNAMIWP": "ami-04f64cadb5a30a34a"
+                "BITNAMIWP": "ami-03a02f83490a69cbf"
             },
             "us-west-1": {
-                "BITNAMIWP": "ami-057021850fbe31874"
+                "BITNAMIWP": "ami-0148383d8d34439d0"
             },
             "us-west-2": {
-                "BITNAMIWP": "ami-09f9614d2c31e7672"
+                "BITNAMIWP": "ami-08d52c79543040061"
             },
             "eu-central-1": {
-                "BITNAMIWP": "ami-0d806601938b047f2"
+                "BITNAMIWP": "ami-0fbb32e84a2d85f19"
             },
             "eu-west-1": {
-                "BITNAMIWP": "ami-0cc85d85717646d1b"
+                "BITNAMIWP": "ami-0245bf95d9daeb0b9"
             },
             "ap-southeast-2": {
-                "BITNAMIWP": "ami-069f16cec0012e324"
+                "BITNAMIWP": "ami-0bfa4ed58077ebabf"
             }
         }
     },
@@ -569,7 +581,7 @@
                 "AWS::CloudFormation::Init" : {
                     "config": {
                         "files": {
-                            "/tmp/secret": {
+                            "/opt/bitnami/var/cfn-user-data": {
                                 "content": {
                                     "Fn::Join": [
                                         "",
@@ -603,20 +615,18 @@
                             "",
                             [
                                 "#!/bin/bash\n",
-                                "sudo cfn-init -v",
-                                " --stack ", { "Ref": "AWS::StackName" },
-                                " --resource WebServerLC",
-                                " --region ", { "Ref": "AWS::Region" }, "\n",
-                                "\n# USER_DATA_FILE=/tmp/secret",
+                                "\n# PROVISIONER_CFN_INIT_ENABLED=true",
+                                "\n# PROVISIONER_CFN_INIT_RESOURCE=WebServerLC",
+                                "\n# PROVISIONER_CFN_INIT_FILE_PATH=/opt/bitnami/var/cfn-user-data",
+                                "\n# PROVISIONER_CFN_RESOURCE=WebServerASG",
+                                "\n# PROVISIONER_CFN_STACK=", { "Ref": "AWS::StackName" },
+                                "\n# PROVISIONER_CFN_REGION=", { "Ref": "AWS::Region" },
                                 "\n# PROVISIONER_PEER_PASSWORD_INPUT=", { "Ref": "AWS::AccountId" },
                                 " ", { "Ref": "AWS::StackId" },
                                 " ", { "Ref": "AWS::Region" },
                                 "\n# PROVISIONER_SHARED_UNIQUE_ID_INPUT=", { "Ref": "AWS::AccountId" },
                                 " ", { "Ref": "AWS::StackId" },
                                 " ", { "Ref": "AWS::Region" },
-                                "\n# PROVISIONER_CFN_RESOURCE=WebServerASG",
-                                "\n# PROVISIONER_CFN_STACK=", { "Ref": "AWS::StackName" },
-                                "\n# PROVISIONER_CFN_REGION=", { "Ref": "AWS::Region" },
                                 "\n# PROVISIONER_EFS_URI=", {
                                     "Fn::Sub": "${WordpressEFS}.efs.${AWS::Region}.amazonaws.com:/"
                                 },
