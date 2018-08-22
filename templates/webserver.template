@@ -275,29 +275,29 @@
     },
     "Mappings": {
         "AWSAMIRegionMap": {
-            "AMI":{
-                "BITNAMIWP":"bitnami-wordpress-XXX-linux-debian-9-x86_64-high-availability-nami-hvm-ebs"
-            },
-            "us-east-1": {
-                "BITNAMIWP": "ami-031f6afed3d897c71"
-            },
-            "us-east-2": {
-                "BITNAMIWP": "ami-03a02f83490a69cbf"
-            },
-            "us-west-1": {
-                "BITNAMIWP": "ami-0148383d8d34439d0"
-            },
-            "us-west-2": {
-                "BITNAMIWP": "ami-08d52c79543040061"
-            },
-            "eu-central-1": {
-                "BITNAMIWP": "ami-0fbb32e84a2d85f19"
-            },
-            "eu-west-1": {
-                "BITNAMIWP": "ami-0245bf95d9daeb0b9"
+            "AMI": {
+                "BITNAMIWP": "bitnami-wordpress-4.9.8-1-linux-debian-9-x86_64-high-availability-nami-hvm-ebs"
             },
             "ap-southeast-2": {
-                "BITNAMIWP": "ami-0bfa4ed58077ebabf"
+                "BITNAMIWP": "ami-0b575b38f54198738"
+            },
+            "eu-central-1": {
+                "BITNAMIWP": "ami-0999a67a8c1adc523"
+            },
+            "eu-west-1": {
+                "BITNAMIWP": "ami-0d86218f67ab92d99"
+            },
+            "us-east-1": {
+                "BITNAMIWP": "ami-074b4f71c0e2efe5b"
+            },
+            "us-east-2": {
+                "BITNAMIWP": "ami-04a3692999c00453a"
+            },
+            "us-west-1": {
+                "BITNAMIWP": "ami-04308a7aebf85b923"
+            },
+            "us-west-2": {
+                "BITNAMIWP": "ami-05e2226bfe022645e"
             }
         }
     },
@@ -307,8 +307,27 @@
                 {
                     "Assert": {
                         "Fn::Or": [
-                          { "Fn::Equals" : [ { "Ref" : "HostedZoneID" }, "" ] },
-                          { "Fn::Not": [ { "Fn::Equals" : [ { "Ref" : "DomainName" }, "" ] } ] } ]
+                            {
+                                "Fn::Equals": [
+                                    {
+                                        "Ref": "HostedZoneID"
+                                    },
+                                    ""
+                                ]
+                            },
+                            {
+                                "Fn::Not": [
+                                    {
+                                        "Fn::Equals": [
+                                            {
+                                                "Ref": "DomainName"
+                                            },
+                                            ""
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
                     },
                     "AssertDescription": "Please specify a 'Domain Name' if you specify 'Route 53 Hosted Zone ID'"
                 }
@@ -318,24 +337,82 @@
     "Conditions": {
         "UseSSL": {
             "Fn::Or": [
-                { "Fn::Not": [ { "Fn::Equals": [ { "Ref": "DomainName" }, "" ] } ] },
-                { "Fn::Not": [ { "Fn::Equals": [ { "Ref": "SSLCertificateId" }, "" ] } ] }
+                {
+                    "Fn::Not": [
+                        {
+                            "Fn::Equals": [
+                                {
+                                    "Ref": "DomainName"
+                                },
+                                ""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "Fn::Not": [
+                        {
+                            "Fn::Equals": [
+                                {
+                                    "Ref": "SSLCertificateId"
+                                },
+                                ""
+                            ]
+                        }
+                    ]
+                }
             ]
         },
         "GenerateSSLCertificate": {
             "Fn::And": [
-                { "Condition": "UseSSL" },
-                { "Fn::Equals": [ { "Ref": "SSLCertificateId" }, "" ] }
+                {
+                    "Condition": "UseSSL"
+                },
+                {
+                    "Fn::Equals": [
+                        {
+                            "Ref": "SSLCertificateId"
+                        },
+                        ""
+                    ]
+                }
             ]
         },
         "AddDNSRecord": {
             "Fn::And": [
-                { "Fn::Not": [ { "Fn::Equals": [ { "Ref": "DomainName" }, "" ] } ] },
-                { "Fn::Not": [ { "Fn::Equals": [ { "Ref": "HostedZoneID" }, "" ] } ] }
+                {
+                    "Fn::Not": [
+                        {
+                            "Fn::Equals": [
+                                {
+                                    "Ref": "DomainName"
+                                },
+                                ""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "Fn::Not": [
+                        {
+                            "Fn::Equals": [
+                                {
+                                    "Ref": "HostedZoneID"
+                                },
+                                ""
+                            ]
+                        }
+                    ]
+                }
             ]
         },
         "EnableInstanceMonitoring": {
-            "Fn::Equals": [ { "Ref": "WebServerInstanceMonitoring" }, "Enabled" ]
+            "Fn::Equals": [
+                {
+                    "Ref": "WebServerInstanceMonitoring"
+                },
+                "Enabled"
+            ]
         }
     },
     "Resources": {
@@ -399,23 +476,45 @@
             "Type": "AWS::Route53::RecordSet",
             "Properties": {
                 "Type": "A",
-                "Name": { "Ref": "DomainName" },
-                "AliasTarget": {
-                    "HostedZoneId": { "Fn::GetAtt": [ "ApplicationLoadBalancer", "CanonicalHostedZoneID" ] },
-                    "DNSName": { "Fn::GetAtt": [ "ApplicationLoadBalancer", "DNSName" ] }
+                "Name": {
+                    "Ref": "DomainName"
                 },
-                "HostedZoneId": { "Ref": "HostedZoneID" }
+                "AliasTarget": {
+                    "HostedZoneId": {
+                        "Fn::GetAtt": [
+                            "ApplicationLoadBalancer",
+                            "CanonicalHostedZoneID"
+                        ]
+                    },
+                    "DNSName": {
+                        "Fn::GetAtt": [
+                            "ApplicationLoadBalancer",
+                            "DNSName"
+                        ]
+                    }
+                },
+                "HostedZoneId": {
+                    "Ref": "HostedZoneID"
+                }
             }
         },
         "ACMCertificate": {
             "Condition": "GenerateSSLCertificate",
             "Type": "AWS::CertificateManager::Certificate",
             "Properties": {
-                "DomainName": { "Ref": "DomainName" },
-                "DomainValidationOptions": [ {
-                    "DomainName": { "Ref": "DomainName" },
-                    "ValidationDomain": { "Ref": "DomainName" }
-                } ]
+                "DomainName": {
+                    "Ref": "DomainName"
+                },
+                "DomainValidationOptions": [
+                    {
+                        "DomainName": {
+                            "Ref": "DomainName"
+                        },
+                        "ValidationDomain": {
+                            "Ref": "DomainName"
+                        }
+                    }
+                ]
             }
         },
         "ApplicationLoadBalancer": {
@@ -486,20 +585,42 @@
                 "LoadBalancerArn": {
                     "Ref": "ApplicationLoadBalancer"
                 },
-                "Port": { "Fn::If": [ "UseSSL", 443, 80 ] },
-                "Protocol": { "Fn::If": [ "UseSSL", "HTTPS", "HTTP" ] },
+                "Port": {
+                    "Fn::If": [
+                        "UseSSL",
+                        443,
+                        80
+                    ]
+                },
+                "Protocol": {
+                    "Fn::If": [
+                        "UseSSL",
+                        "HTTPS",
+                        "HTTP"
+                    ]
+                },
                 "Certificates": [
-                    { "Fn::If": [ "UseSSL",
-                        {
-                            "CertificateArn": {
-                                "Fn::If": [ "GenerateSSLCertificate",
-                                    { "Ref": "ACMCertificate" },
-                                    { "Ref": "SSLCertificateId" }
-                                ]
+                    {
+                        "Fn::If": [
+                            "UseSSL",
+                            {
+                                "CertificateArn": {
+                                    "Fn::If": [
+                                        "GenerateSSLCertificate",
+                                        {
+                                            "Ref": "ACMCertificate"
+                                        },
+                                        {
+                                            "Ref": "SSLCertificateId"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "Ref": "AWS::NoValue"
                             }
-                        },
-                        { "Ref": "AWS::NoValue" }
-                    ] }
+                        ]
+                    }
                 ]
             }
         },
@@ -555,20 +676,20 @@
                     "Timeout": "PT15M"
                 }
             },
-            "UpdatePolicy" : {
-                "AutoScalingRollingUpdate" : {
-                    "MinInstancesInService" : 1,
-                    "PauseTime" : "PT15M",
-                    "SuspendProcesses" : [
+            "UpdatePolicy": {
+                "AutoScalingRollingUpdate": {
+                    "MinInstancesInService": 1,
+                    "PauseTime": "PT15M",
+                    "SuspendProcesses": [
                         "HealthCheck",
                         "ReplaceUnhealthy",
                         "AZRebalance",
                         "AlarmNotification",
                         "ScheduledActions"
                     ],
-                    "WaitOnResourceSignals" : true
+                    "WaitOnResourceSignals": true
                 }
-              }
+            }
         },
         "WebServerLC": {
             "Type": "AWS::AutoScaling::LaunchConfiguration",
@@ -578,7 +699,7 @@
                 "ApplicationLoadBalancer"
             ],
             "Metadata": {
-                "AWS::CloudFormation::Init" : {
+                "AWS::CloudFormation::Init": {
                     "config": {
                         "files": {
                             "/opt/bitnami/var/cfn-user-data": {
@@ -586,8 +707,14 @@
                                     "Fn::Join": [
                                         "",
                                         [
-                                            "\n# PROVISIONER_PEER_PASSWORD=", { "Ref": "DBMasterUserPassword" },
-                                            "\n# PROVISIONER_APP_PASSWORD=", { "Ref": "WordpressAdminPassword" }
+                                            "\n# PROVISIONER_PEER_PASSWORD=",
+                                            {
+                                                "Ref": "DBMasterUserPassword"
+                                            },
+                                            "\n# PROVISIONER_APP_PASSWORD=",
+                                            {
+                                                "Ref": "WordpressAdminPassword"
+                                            }
                                         ]
                                     ]
                                 },
@@ -619,24 +746,69 @@
                                 "\n# PROVISIONER_CFN_INIT_RESOURCE=WebServerLC",
                                 "\n# PROVISIONER_CFN_INIT_FILE_PATH=/opt/bitnami/var/cfn-user-data",
                                 "\n# PROVISIONER_CFN_RESOURCE=WebServerASG",
-                                "\n# PROVISIONER_CFN_STACK=", { "Ref": "AWS::StackName" },
-                                "\n# PROVISIONER_CFN_REGION=", { "Ref": "AWS::Region" },
-                                "\n# PROVISIONER_PEER_PASSWORD_INPUT=", { "Ref": "AWS::AccountId" },
-                                " ", { "Ref": "AWS::StackId" },
-                                " ", { "Ref": "AWS::Region" },
-                                "\n# PROVISIONER_SHARED_UNIQUE_ID_INPUT=", { "Ref": "AWS::AccountId" },
-                                " ", { "Ref": "AWS::StackId" },
-                                " ", { "Ref": "AWS::Region" },
-                                "\n# PROVISIONER_EFS_URI=", {
+                                "\n# PROVISIONER_CFN_STACK=",
+                                {
+                                    "Ref": "AWS::StackName"
+                                },
+                                "\n# PROVISIONER_CFN_REGION=",
+                                {
+                                    "Ref": "AWS::Region"
+                                },
+                                "\n# PROVISIONER_PEER_PASSWORD_INPUT=",
+                                {
+                                    "Ref": "AWS::AccountId"
+                                },
+                                " ",
+                                {
+                                    "Ref": "AWS::StackId"
+                                },
+                                " ",
+                                {
+                                    "Ref": "AWS::Region"
+                                },
+                                "\n# PROVISIONER_SHARED_UNIQUE_ID_INPUT=",
+                                {
+                                    "Ref": "AWS::AccountId"
+                                },
+                                " ",
+                                {
+                                    "Ref": "AWS::StackId"
+                                },
+                                " ",
+                                {
+                                    "Ref": "AWS::Region"
+                                },
+                                "\n# PROVISIONER_EFS_URI=",
+                                {
                                     "Fn::Sub": "${WordpressEFS}.efs.${AWS::Region}.amazonaws.com:/"
                                 },
-                                "\n# PROVISIONER_PUBLIC_URL=", { "Fn::If": [ "UseSSL", "https://", "http://" ] },
-                                { "Fn::If": [ "AddDNSRecord",
-                                    { "Ref": "DomainName" },
-                                    { "Fn::GetAtt": [ "ApplicationLoadBalancer", "DNSName" ] }
-                                ] },
+                                "\n# PROVISIONER_PUBLIC_URL=",
+                                {
+                                    "Fn::If": [
+                                        "UseSSL",
+                                        "https://",
+                                        "http://"
+                                    ]
+                                },
+                                {
+                                    "Fn::If": [
+                                        "AddDNSRecord",
+                                        {
+                                            "Ref": "DomainName"
+                                        },
+                                        {
+                                            "Fn::GetAtt": [
+                                                "ApplicationLoadBalancer",
+                                                "DNSName"
+                                            ]
+                                        }
+                                    ]
+                                },
                                 "\n# PROVISIONER_TIER=frontend_ha",
-                                "\n# PROVISIONER_PEER_ADDRESS=", { "Ref": "DBEndpointAddress" }
+                                "\n# PROVISIONER_PEER_ADDRESS=",
+                                {
+                                    "Ref": "DBEndpointAddress"
+                                }
                             ]
                         ]
                     }
@@ -645,7 +817,11 @@
                     "Ref": "WebServerInstanceType"
                 },
                 "InstanceMonitoring": {
-                    "Fn::If": [ "EnableInstanceMonitoring", true, false ]
+                    "Fn::If": [
+                        "EnableInstanceMonitoring",
+                        true,
+                        false
+                    ]
                 },
                 "SecurityGroups": [
                     {
@@ -695,19 +871,44 @@
             "Condition": "AddDNSRecord",
             "Description": "The URL to access the web application",
             "Value": {
-                "Fn::Join": [ "", [
-                    { "Fn::If": [ "UseSSL", "https://", "http://" ] },
-                    { "Ref": "DomainName" }
-                ] ]
+                "Fn::Join": [
+                    "",
+                    [
+                        {
+                            "Fn::If": [
+                                "UseSSL",
+                                "https://",
+                                "http://"
+                            ]
+                        },
+                        {
+                            "Ref": "DomainName"
+                        }
+                    ]
+                ]
             }
         },
         "ELBURL": {
             "Description": "The URL of the ELB. Point your domain to it by using a CNAME/ALIAS DNS record",
             "Value": {
-                "Fn::Join": [ "", [
-                    { "Fn::If": [ "UseSSL", "https://", "http://" ] },
-                    { "Fn::GetAtt": [ "ApplicationLoadBalancer", "DNSName" ] }
-                ] ]
+                "Fn::Join": [
+                    "",
+                    [
+                        {
+                            "Fn::If": [
+                                "UseSSL",
+                                "https://",
+                                "http://"
+                            ]
+                        },
+                        {
+                            "Fn::GetAtt": [
+                                "ApplicationLoadBalancer",
+                                "DNSName"
+                            ]
+                        }
+                    ]
+                ]
             }
         }
     }
