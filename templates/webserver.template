@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "WordPress Webserver Template. (qs-???????)",
+    "Description": "WordPress Webserver Template. (qs-1op312ie1)",
     "Metadata": {
         "AWS::CloudFormation::Interface": {
             "ParameterGroups": [

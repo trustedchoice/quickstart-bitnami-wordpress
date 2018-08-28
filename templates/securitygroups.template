@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "WordPress Security Groups template. (qs-???????)",
+    "Description": "WordPress Security Groups template. (qs-1op312ie1)",
     "Parameters": {
         "VPC": {
             "Description": "VPC-ID of your existing Virtual Private Cloud (VPC) where you want to depoy RDS",
