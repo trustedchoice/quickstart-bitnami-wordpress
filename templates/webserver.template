@@ -33,8 +33,7 @@
                     },
                     "Parameters": [
                         "DomainName",
-                        "SSLCertificateId",
-                        "HostedZoneID"
+                        "CertificateArn"
                     ]
                 },
                 {
@@ -68,14 +67,14 @@
         "QSS3BucketName": {
             "AllowedPattern": "^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$",
             "ConstraintDescription": "AWS Quick Start bucket name can include numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen (-).",
-            "Default": "quickstart-reference",
+            "Default": "aws-quickstart",
             "Description": "S3 bucket name for the AWS Quick Start assets. AWS Quick Start bucket name can include numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen (-)",
             "Type": "String"
         },
         "QSS3KeyPrefix": {
             "AllowedPattern": "^[0-9a-zA-Z-/]*$",
             "ConstraintDescription": "AWS Quick Start key prefix can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slash (/). It cannot start or end with forward slash (/) because they are automatically appended.",
-            "Default": "wordpress/latest/",
+            "Default": "quickstart-bitnami-wordpress",
             "Description": "S3 key prefix for the AWS Quick Start assets.AWS Quick Start key prefix can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slash (/). It cannot start or end with forward slash (/) because they are automatically appended",
             "Type": "String"
         },
@@ -261,16 +260,10 @@
             "AllowedPattern": "^((\\w+\\.)+\\w+){0,1}$",
             "ConstraintDescription": "Must be a valid domain name."
         },
-        "SSLCertificateId": {
-            "Description": "(Optional) The ARN of the SSL certificate to use for the load balancer. If not specified, the certificate will be auto-generated",
+        "CertificateArn": {
+            "Description": "(Optional) The ARN of the SSL certificate to use for the load balancer.",
             "Type": "String",
             "Default": ""
-        },
-        "HostedZoneID": {
-            "Description": "(Optional) Route 53 Hosted Zone ID of the domain name. If left blank route 53 will not be configured and DNS must be setup manually. If you specify this, you must also specify a Domain name",
-            "Type": "String",
-            "Default": "",
-            "MaxLength": "32"
         }
     },
     "Mappings": {
@@ -301,39 +294,6 @@
             }
         }
     },
-    "Rules": {
-        "DomainNameIsPresentIfHostedZoneIDRule": {
-            "Assertions": [
-                {
-                    "Assert": {
-                        "Fn::Or": [
-                            {
-                                "Fn::Equals": [
-                                    {
-                                        "Ref": "HostedZoneID"
-                                    },
-                                    ""
-                                ]
-                            },
-                            {
-                                "Fn::Not": [
-                                    {
-                                        "Fn::Equals": [
-                                            {
-                                                "Ref": "DomainName"
-                                            },
-                                            ""
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    "AssertDescription": "Please specify a 'Domain Name' if you specify 'Route 53 Hosted Zone ID'"
-                }
-            ]
-        }
-    },
     "Conditions": {
         "UseSSL": {
             "Fn::Or": [
@@ -354,54 +314,23 @@
                         {
                             "Fn::Equals": [
                                 {
-                                    "Ref": "SSLCertificateId"
+                                    "Ref": "CertificateArn"
                                 },
                                 ""
                             ]
                         }
-                    ]
-                }
-            ]
-        },
-        "GenerateSSLCertificate": {
-            "Fn::And": [
-                {
-                    "Condition": "UseSSL"
-                },
-                {
-                    "Fn::Equals": [
-                        {
-                            "Ref": "SSLCertificateId"
-                        },
-                        ""
                     ]
                 }
             ]
         },
         "AddDNSRecord": {
-            "Fn::And": [
+            "Fn::Not": [
                 {
-                    "Fn::Not": [
+                    "Fn::Equals": [
                         {
-                            "Fn::Equals": [
-                                {
-                                    "Ref": "DomainName"
-                                },
-                                ""
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "Fn::Not": [
-                        {
-                            "Fn::Equals": [
-                                {
-                                    "Ref": "HostedZoneID"
-                                },
-                                ""
-                            ]
-                        }
+                            "Ref": "DomainName"
+                        },
+                        ""
                     ]
                 }
             ]
@@ -467,52 +396,6 @@
                 "SecurityGroups": [
                     {
                         "Ref": "EFSSecurityGroup"
-                    }
-                ]
-            }
-        },
-        "Route53RecordSet": {
-            "Condition": "AddDNSRecord",
-            "Type": "AWS::Route53::RecordSet",
-            "Properties": {
-                "Type": "A",
-                "Name": {
-                    "Ref": "DomainName"
-                },
-                "AliasTarget": {
-                    "HostedZoneId": {
-                        "Fn::GetAtt": [
-                            "ApplicationLoadBalancer",
-                            "CanonicalHostedZoneID"
-                        ]
-                    },
-                    "DNSName": {
-                        "Fn::GetAtt": [
-                            "ApplicationLoadBalancer",
-                            "DNSName"
-                        ]
-                    }
-                },
-                "HostedZoneId": {
-                    "Ref": "HostedZoneID"
-                }
-            }
-        },
-        "ACMCertificate": {
-            "Condition": "GenerateSSLCertificate",
-            "Type": "AWS::CertificateManager::Certificate",
-            "Properties": {
-                "DomainName": {
-                    "Ref": "DomainName"
-                },
-                "DomainValidationOptions": [
-                    {
-                        "DomainName": {
-                            "Ref": "DomainName"
-                        },
-                        "ValidationDomain": {
-                            "Ref": "DomainName"
-                        }
                     }
                 ]
             }
@@ -604,17 +487,9 @@
                         "Fn::If": [
                             "UseSSL",
                             {
-                                "CertificateArn": {
-                                    "Fn::If": [
-                                        "GenerateSSLCertificate",
-                                        {
-                                            "Ref": "ACMCertificate"
-                                        },
-                                        {
-                                            "Ref": "SSLCertificateId"
-                                        }
-                                    ]
-                                }
+                              "CertificateArn":{
+                                "Ref": "CertificateArn"
+                              }
                             },
                             {
                                 "Ref": "AWS::NoValue"

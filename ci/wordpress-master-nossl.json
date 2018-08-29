@@ -56,18 +56,6 @@
         "ParameterValue": "10.0.0.0/16"
     },
     {
-        "ParameterKey": "DomainName",
-        "ParameterValue": "bitnamiwp.t.quickstart.awspartner.com"
-    },
-    {
-        "ParameterKey": "CertificateArn",
-        "ParameterValue": ""
-    },
-    {
-        "ParameterKey": "HostedZoneID",
-        "ParameterValue": "Z3AUDQLV95DIKK"
-    },
-    {
         "ParameterKey": "VPCCIDR",
         "ParameterValue": "10.0.0.0/16"
     },
