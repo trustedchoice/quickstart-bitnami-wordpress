@@ -12,13 +12,9 @@ global:
     - us-west-2
   reporting: true
 tests:
+  bitnami-wordpress-ssl:
+    parameter_input: wordpress-master.json
+    template_file: wordpress-master.template
   bitnami-wordpress:
     parameter_input: wordpress-master.json
     template_file: wordpress-master.template
-    regions:
-    - ap-southeast-2
-    - eu-central-1
-    - eu-west-1
-    - us-east-1
-    - us-east-2
-    - us-west-2
