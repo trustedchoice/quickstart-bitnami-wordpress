@@ -57,7 +57,7 @@
     },
     {
         "ParameterKey": "DomainName",
-        "ParameterValue": "override"
+        "ParameterValue": "override.example.com"
 
     },
     {
