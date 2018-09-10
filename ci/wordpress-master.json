@@ -57,7 +57,8 @@
     },
     {
         "ParameterKey": "DomainName",
-        "ParameterValue": "bitnamiwp.t.quickstart.awspartner.com"
+        "ParameterValue": "override"
+
     },
     {
         "ParameterKey": "CertificateArn",
@@ -65,7 +66,7 @@
     },
     {
         "ParameterKey": "HostedZoneID",
-        "ParameterValue": "Z3AUDQLV95DIKK"
+        "ParameterValue": "override"
     },
     {
         "ParameterKey": "VPCCIDR",
