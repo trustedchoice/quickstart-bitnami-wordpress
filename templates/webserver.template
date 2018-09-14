@@ -269,28 +269,37 @@
     "Mappings": {
         "AWSAMIRegionMap": {
             "AMI": {
-                "BITNAMIWP": "bitnami-wordpress-4.9.8-1-linux-debian-9-x86_64-high-availability-nami-hvm-ebs"
+                "BITNAMIWP": "bitnami-wordpress-4.9.8-2-linux-debian-9-x86_64-high-availability-nami-hvm-ebs"
+            },
+            "ap-northeast-1": {
+                "BITNAMIWP": "ami-073a31375a39f2104"
+            },
+            "ap-northeast-2": {
+                "BITNAMIWP": "ami-0f156aa54944fc2c5"
+            },
+            "ap-southeast-1": {
+                "BITNAMIWP": "ami-034be2f45952838b6"
             },
             "ap-southeast-2": {
-                "BITNAMIWP": "ami-0b575b38f54198738"
+                "BITNAMIWP": "ami-07d52919db7d9ac77"
             },
             "eu-central-1": {
-                "BITNAMIWP": "ami-0999a67a8c1adc523"
+                "BITNAMIWP": "ami-0d012ea3ed4d11af9"
             },
             "eu-west-1": {
-                "BITNAMIWP": "ami-0d86218f67ab92d99"
+                "BITNAMIWP": "ami-0afd11c4d214610ef"
             },
             "us-east-1": {
-                "BITNAMIWP": "ami-074b4f71c0e2efe5b"
+                "BITNAMIWP": "ami-032e672162813b267"
             },
             "us-east-2": {
-                "BITNAMIWP": "ami-04a3692999c00453a"
+                "BITNAMIWP": "ami-07cf93c7ca7c078a0"
             },
             "us-west-1": {
-                "BITNAMIWP": "ami-04308a7aebf85b923"
+                "BITNAMIWP": "ami-0d38c87249da20ecb"
             },
             "us-west-2": {
-                "BITNAMIWP": "ami-05e2226bfe022645e"
+                "BITNAMIWP": "ami-038377cda84be68aa"
             }
         }
     },
