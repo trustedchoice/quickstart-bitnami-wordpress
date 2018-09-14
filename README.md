@@ -1,4 +1,4 @@
-# WordPress on the AWS Cloud
+# WordPress High Availability by Bitnami on the AWS Cloud
 ## Quick Start Reference Deployment
 
 WordPress is one of the world’s most popular web publishing platforms for building blogs and websites. It can be customized via a wide selection of themes, extensions and plugins.
