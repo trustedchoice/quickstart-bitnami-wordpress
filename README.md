@@ -16,7 +16,7 @@ You can also use the AWS CloudFormation templates as a starting point for your o
 ![Quick Start architecture for WordPress High Availability by Bitnami on AWS](https://d0.awsstatic.com/partner-network/QuickStart/datasheets/bitnami-wordpress-on-aws-architecture.png)
 
 For architectural details, best practices, step-by-step instructions, and customization options, see the 
-[deployment guide](https://aws-quickstart.s3.amazonaws.com/quickstart-bitnami-wordpress/doc/wordpress-high-availability-by-bitnami-on-the-aws-cloud.pdf).
+[deployment guide](https://fwd.aws/arqWN).
 
 To post feedback, submit feature ideas, or report bugs, use the **Issues** section of this GitHub repo.
 If you'd like to submit code for this Quick Start, please review the [AWS Quick Start Contributor's Kit](https://aws-quickstart.github.io/). 
