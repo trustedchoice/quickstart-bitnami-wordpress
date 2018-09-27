@@ -343,7 +343,7 @@
         "QSS3KeyPrefix": {
             "AllowedPattern": "^[0-9a-zA-Z-/]*$",
             "ConstraintDescription": "AWS Quick Start key prefix can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slash (/). It cannot start or end with forward slash (/) because they are automatically appended.",
-            "Default": "quickstart-bitnami-wordpress",
+            "Default": "quickstart-bitnami-wordpress/",
             "Description": "S3 key prefix for the AWS Quick Start assets.AWS Quick Start key prefix can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slash (/). It cannot start or end with forward slash (/) because they are automatically appended",
             "Type": "String"
         },
@@ -556,7 +556,7 @@
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
                 "TemplateURL": {
-                    "Fn::Sub": "https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}/submodules/quickstart-aws-vpc/templates/aws-vpc.template"
+                    "Fn::Sub": "https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template"
                 },
                 "Parameters": {
                     "AvailabilityZones": {
@@ -594,7 +594,7 @@
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
                 "TemplateURL": {
-                    "Fn::Sub": "https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}/submodules/quickstart-linux-bastion/templates/linux-bastion.template"
+                    "Fn::Sub": "https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/templates/linux-bastion.template"
                 },
                 "Parameters": {
                     "BastionAMIOS": {
@@ -622,7 +622,7 @@
                         "Ref": "QSS3BucketName"
                     },
                     "QSS3KeyPrefix": {
-                        "Fn::Sub": "${QSS3KeyPrefix}/"
+                        "Fn::Sub": "${QSS3KeyPrefix}"
                     },
                     "RemoteAccessCIDR": {
                         "Ref": "RemoteAccessCIDR"
@@ -641,14 +641,14 @@
             "Type":"AWS::CloudFormation::Stack",
             "Properties":{
                 "TemplateURL":{
-                    "Fn::Sub": "https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}/templates/copy-lambdas.template"
+                    "Fn::Sub": "https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}templates/copy-lambdas.template"
                 },
                 "Parameters":{
                     "QSS3BucketName": {
                         "Ref": "QSS3BucketName"
                     },
                     "QSS3KeyPrefix": {
-                        "Ref": "QSS3KeyPrefix/"
+                        "Ref": "QSS3KeyPrefix"
                     }
                 }
             }
@@ -659,7 +659,7 @@
             "Type":"AWS::CloudFormation::Stack",
             "Properties":{
                 "TemplateURL":{
-                    "Fn::Sub": "https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}/templates/acm-cert-r53-record.template"
+                    "Fn::Sub": "https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}templates/acm-cert-r53-record.template"
                 },
                 "Parameters":{
                   "LambdaZipsBucketName": {
@@ -669,7 +669,7 @@
                     ]
                   },
                   "QSS3KeyPrefix": {
-                    "Ref": "QSS3KeyPrefix/"
+                    "Ref": "QSS3KeyPrefix"
                   },
                   "DomainName":{
                     "Ref":"DomainName"
@@ -685,7 +685,7 @@
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
                 "TemplateURL": {
-                    "Fn::Sub": "https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}/templates/wordpress.template"
+                    "Fn::Sub": "https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}templates/wordpress.template"
                 },
                 "Parameters": {
                     "VPCID": {
@@ -801,7 +801,7 @@
                         "Ref": "QSS3BucketName"
                     },
                     "QSS3KeyPrefix": {
-                        "Ref": "QSS3KeyPrefix/"
+                        "Ref": "QSS3KeyPrefix"
                     },
                     "ALBAccessCIDR": {
                         "Ref": "ALBAccessCIDR"
