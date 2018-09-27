@@ -4,10 +4,6 @@
         "ParameterValue": "$[taskcat_autobucket]"
     },
     {
-        "ParameterKey": "QSS3KeyPrefix",
-        "ParameterValue": "quickstart-bitnami-wordpress/"
-    },
-    {
         "ParameterKey": "AutoScalingNotificationEmail",
         "ParameterValue": "foo@example.com"
     },
