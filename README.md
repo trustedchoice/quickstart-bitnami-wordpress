@@ -1,18 +1,22 @@
-# WordPress High Availability by Bitnami on the AWS Cloud
-## Quick Start Reference Deployment
+# quickstart-bitnami-wordpress
+## WordPress High Availability by Bitnami on the AWS Cloud
 
-WordPress is one of the world’s most popular web publishing platforms for building blogs and websites. It can be customized via a wide selection of themes, extensions and plugins.
+This Quick Start deploys WordPress High Availability by Bitnami, which includes WordPress and Amazon Aurora, in a highly available environment on AWS in about 40 minutes.
 
-This Quick Start deploys a WordPress architecture for high availability on the AWS Cloud.
-
-![Quick Start WordPress Architecture Diagram](docs/architecture_diagram.png)
-
-For more details, see the [Quick Start WordPress deployment guide](docs/deployment_guide.pdf).
+WordPress is a web publishing platform for building blogs and websites. It can be customized via a wide selection of themes, extensions, and plugins. WordPress High Availability by Bitnami installs the WordPress application on multiple servers (Amazon EC2 instances) in the AWS Cloud for high performance and availability. It also sets up an Aurora relational database to help you reduce costs, simplify configuration tasks, and scale with ease. The database and WordPress application are set up on different EC2 instances to help improve security and access control.
 
 
-## Quick Links
+The Quick Start offers two deployment options:
 
-The links in this section are for your convenience. Before you launch the Quick Start, please review the prerequisites for deployment discussed in the [Deployment guide](docs/deployment_guide.pdf). If you have an AWS account, and you’re already familiar with AWS services and with WordPress, you can launch the Quick Start. The deployment takes about half an hour.
+- Deploying WordPress High Availability by Bitnami into a new virtual private cloud (VPC) on AWS
+- Deploying WordPress High Availability by Bitnami into an existing VPC on AWS
 
-- [View template for deploy WordPress into an existing VPC](templates/wordpress.template)
-- [View template for deploy WordPress into a new VPC](templates/wordpress-master.template)
+You can also use the AWS CloudFormation templates as a starting point for your own implementation.
+
+![Quick Start architecture for WordPress High Availability by Bitnami on AWS](https://d0.awsstatic.com/partner-network/QuickStart/datasheets/bitnami-wordpress-on-aws-architecture.png)
+
+For architectural details, best practices, step-by-step instructions, and customization options, see the 
+[deployment guide](https://fwd.aws/arqWN).
+
+To post feedback, submit feature ideas, or report bugs, use the **Issues** section of this GitHub repo.
+If you'd like to submit code for this Quick Start, please review the [AWS Quick Start Contributor's Kit](https://aws-quickstart.github.io/). 
