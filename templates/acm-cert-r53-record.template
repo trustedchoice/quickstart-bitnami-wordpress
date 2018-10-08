@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "(qs-1op312ie1) Creates R53 records and ACM Certificate.",
+    "Description": "(qs-1ot302h6c) Creates R53 records and ACM Certificate.",
     "Metadata": {
         "AWS::CloudFormation::Interface": {
             "ParameterGroups": [

@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "WordPress RDS Aurora-MySQL Template. (qs-1op312ie1)",
+    "Description": "WordPress RDS Aurora-MySQL Template. (qs-1ot302h6n)",
     "Parameters": {
         "Subnets": {
             "ConstraintDescription": "Must be list of existing subnet Ids",

@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "This template creates an S3 bucket in the same region where the stack is launched and copy the Lambda functions code from original bucket to the new bucket. (qs-1op312ie1)",
+    "Description": "This template creates an S3 bucket in the same region where the stack is launched and copy the Lambda functions code from original bucket to the new bucket. (qs-1ot302h6h)",
     "Parameters": {
         "QSS3BucketName": {
             "AllowedPattern": "^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$",

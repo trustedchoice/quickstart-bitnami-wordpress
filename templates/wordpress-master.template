@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "This template creates a new VPC and deploys WordPress. **WARNING** This template creates EC2 instances and related resources. You will be billed for the AWS resources used if you create a stack from this template. (qs-1op312ie1)",
+    "Description": "This template creates a new VPC and deploys WordPress. **WARNING** This template creates EC2 instances and related resources. You will be billed for the AWS resources used if you create a stack from this template. (qs-1ot302h77)",
     "Metadata": {
         "AWS::CloudFormation::Interface": {
             "ParameterGroups": [
