@@ -52,6 +52,19 @@
         "ParameterValue": "10.0.0.0/16"
     },
     {
+        "ParameterKey": "DomainName",
+        "ParameterValue": "override.example.com"
+
+    },
+    {
+        "ParameterKey": "CertificateArn",
+        "ParameterValue": ""
+    },
+    {
+        "ParameterKey": "HostedZoneID",
+        "ParameterValue": "override"
+    },
+    {
         "ParameterKey": "VPCCIDR",
         "ParameterValue": "10.0.0.0/16"
     },
