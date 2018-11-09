@@ -769,7 +769,7 @@
             }
         },
         "ConfigureSSLStack": {
-			"DependsOn":"CopyLambdaStack",
+            "DependsOn":"CopyLambdaStack",
             "Condition":"UseSSL",
             "Type":"AWS::CloudFormation::Stack",
             "Properties":{
