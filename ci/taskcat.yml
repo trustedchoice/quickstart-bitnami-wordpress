@@ -16,7 +16,7 @@ global:
   reporting: true
 tests:
   bitnami-wordpress-ssl:
-    parameter_input: wordpress-master.json
+    parameter_input: wordpress-master-ssl.json
     template_file: wordpress-master.template
   bitnami-wordpress:
     parameter_input: wordpress-master.json
