@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "WordPress ElastiCache - Memcached Cluster",
+    "Description": "WordPress ElastiCache - Memcached Cluster. (qs-1op312ie1)",
     "Parameters": {
         "Subnets": {
             "ConstraintDescription": "Must be a list of existing subnet Ids",
