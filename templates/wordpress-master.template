@@ -717,7 +717,6 @@
             }
         },
         "WordPressStack": {
-            "DependsOn":"ConfigureSSLStack",
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
                 "TemplateURL": {
