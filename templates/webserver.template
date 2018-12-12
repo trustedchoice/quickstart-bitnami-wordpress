@@ -20,6 +20,14 @@
                 },
                 {
                     "Label": {
+                        "default": "ElastiCache Configuration"
+                    },
+                    "Parameters": [
+                        "ElastiCacheEndpointAddress"
+                    ]
+                },
+                {
+                    "Label": {
                         "default": "Database Configuration"
                     },
                     "Parameters": [
@@ -235,6 +243,10 @@
             "Default": "id_rsa_aws",
             "Description": "Name of an existing EC2 KeyPair to enable SSH access to the instances. Use 'bitnami' user for the ssh connection to the WordPress instances",
             "Type": "AWS::EC2::KeyPair::KeyName"
+        },
+        "ElastiCacheEndpointAddress": {
+            "Description": "ElastiCache Endpoint",
+            "Type": "String"
         },
         "DBEndpointAddress": {
             "Description": "Aurora DB Endpoint",
@@ -529,7 +541,7 @@
             "Type": "AWS::IAM::Policy",
             "Condition": "EnableElastiCacheCondition",
             "Properties": {
-                "PolicyName": "DescirbeElastiCacheClusterPolicy",
+                "PolicyName": "DescribeElastiCacheClusterPolicy",
                 "PolicyDocument": {
                     "Statement": [
                         {
@@ -829,6 +841,10 @@
                                     ]
                                 },
                                 "\n# PROVISIONER_TIER=frontend_ha",
+                                "\n# PROVISIONER_ELASTICACHE_ADDRESS=",
+                                {
+                                    "Ref": "ElastiCacheEndpointAddress"
+                                },
                                 "\n# PROVISIONER_PEER_ADDRESS=",
                                 {
                                     "Ref": "DBEndpointAddress"
