@@ -759,9 +759,15 @@
                         "Ref": "KeyPairName"
                     },
                     "ElastiCacheEndpointAddress": {
-                        "Fn::GetAtt": [
-                            "ElastiCacheStack",
-                            "Outputs.ElastiCacheClusterEndPoint"
+                        "Fn::If":[
+                            "ElastiCacheEnableCondition",
+                            {
+                                "Fn::GetAtt": [
+                                    "ElastiCacheStack",
+                                    "Outputs.ElastiCacheClusterEndPoint"
+                                ]
+                            },
+                            ""
                         ]
                     },
                     "DBEndpointAddress": {
@@ -812,7 +818,7 @@
                     "EnableElastiCache": {
                         "Ref": "ElastiCacheEnable"
                     },
-                    "ElastiCacheClusterId":{
+                    "ElastiCacheClusterId": {
                         "Fn::If":[
                             "ElastiCacheEnableCondition",
                             {"Fn::GetAtt": ["ElastiCacheStack", "Outputs.ElastiCacheClusterId"]},
