@@ -22,7 +22,7 @@
             "Description": "ID of the Bastion Security Group (e.g., sg-1d2c3b4a)",
             "Type": "AWS::EC2::SecurityGroup::Id"
         },
-        "EnableElastiCache":{
+        "ElastiCacheEnable":{
             "Description": "Enable ElastiCache",
             "AllowedValues": [
                 "true",
@@ -33,10 +33,10 @@
         }
     },
     "Conditions":{
-        "EnableElastiCacheCondition":{
+        "ElastiCacheEnableCondition":{
             "Fn::Equals": [
                 {
-                    "Ref": "EnableElastiCache"
+                    "Ref": "ElastiCacheEnable"
                 },
                 "true"
             ]
@@ -178,7 +178,7 @@
         },
         "ElastiCacheSecurityGroup": {
             "Type": "AWS::EC2::SecurityGroup",
-            "Condition": "EnableElastiCacheCondition",
+            "Condition": "ElastiCacheEnableCondition",
             "Properties": {
                 "GroupDescription": "Allow access to ElastiCache-Memcached Port (AWS Quick Start)",
                 "VpcId": {
@@ -201,7 +201,7 @@
         },
         "SecurityGroupRuleElastiCache": {
             "Type": "AWS::EC2::SecurityGroupEgress",
-            "Condition": "EnableElastiCacheCondition",
+            "Condition": "ElastiCacheEnableCondition",
             "Properties": {
                 "IpProtocol": "tcp",
                 "FromPort": "11211",
@@ -290,7 +290,7 @@
             "Description": "ElastiCache Security Group",
             "Value": {
                 "Fn::If":[
-                    "EnableElastiCacheCondition",
+                    "ElastiCacheEnableCondition",
                     {"Ref": "ElastiCacheSecurityGroup"},
                     ""
                 ]
