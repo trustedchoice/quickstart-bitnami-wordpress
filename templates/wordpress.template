@@ -59,6 +59,17 @@
                 },
                 {
                     "Label": {
+                        "default": "ElastiCache Configuration"
+                    },
+                    "Parameters": [
+                        "ElastiCacheEnable",
+                        "ElastiCacheAutoMinorVersionUpgrade",
+                        "ElastiCacheNodeType",
+                        "ElastiCacheNumberOfNodes"
+                    ]
+                },
+                {
+                    "Label": {
                         "default": "AWS Quick Start Configuration"
                     },
                     "Parameters": [
@@ -148,6 +159,18 @@
                 },
                 "WebServerMinSize": {
                     "default": "Min Number of Instances"
+                },
+                "ElastiCacheEnable":{
+                    "default": "Enable ElastiCache"
+                },
+                "ElastiCacheAutoMinorVersionUpgrade":{
+                    "default": "Enable ElastiCache Auto Minor Version Upgrade"
+                },
+                "ElastiCacheNodeType":{
+                    "default": "ElastiCache Node Type"
+                },
+                "ElastiCacheNumberOfNodes":{
+                    "default": "Number of ElastiCache Nodes"
                 }
             }
         }
@@ -476,6 +499,62 @@
             "Default": "1",
             "Description": "Minimum number of WordPress instances in the Auto Scaling group",
             "Type": "Number"
+        },
+        "ElastiCacheEnable": {
+            "AllowedValues": [
+                "true",
+                "false"
+            ],
+            "Default": "true",
+            "Description": "Enable ElastiCache Memcached",
+            "Type": "String"
+        },
+        "ElastiCacheAutoMinorVersionUpgrade":{
+            "AllowedValues": [
+                "true",
+                "false"
+            ],
+            "Default": "true",
+            "Description": "Select true/false to setup Auto Minor Version upgrade",
+            "Type": "String"
+        },
+        "ElastiCacheNodeType": {
+            "AllowedValues": [
+                "cache.t2.micro",
+                "cache.t2.small",
+                "cache.t2.medium",
+                "cache.m3.medium",
+                "cache.m3.large",
+                "cache.m3.xlarge",
+                "cache.m3.2xlarge",
+                "cache.m4.large",
+                "cache.m4.xlarge",
+                "cache.m4.2xlarge",
+                "cache.m4.4xlarge",
+                "cache.m4.10xlarge",
+                "cache.r3.large",
+                "cache.r3.xlarge",
+                "cache.r3.2xlarge",
+                "cache.r3.4xlarge",
+                "cache.r3.8xlarge",
+                "cache.r4.large",
+                "cache.r4.xlarge",
+                "cache.r4.2xlarge",
+                "cache.r4.4xlarge",
+                "cache.r4.8xlarge",
+                "cache.r4.16xlarge"
+            ],
+            "ConstraintDescription": "Must select a valid ElastiCache node type.",
+            "Default": "cache.t2.micro",
+            "Description": "The compute and memory capacity of nodes in a cache cluster.",
+            "Type": "String"
+        },
+        "ElastiCacheNumberOfNodes": {
+            "Default": "2",
+            "MinValue": "1",
+            "MaxValue": "20",
+            "Description": "The number of cache nodes that the cache cluster should have.",
+            "Type": "Number"
         }
     },
     "Rules": {
@@ -523,6 +602,14 @@
             "Fn::And": [
                 { "Fn::Not": [ { "Fn::Equals": [ { "Ref": "DomainName" }, "" ] } ] },
                 { "Fn::Not": [ { "Fn::Equals": [ { "Ref": "HostedZoneID" }, "" ] } ] }
+            ]
+        },
+        "ElastiCacheEnableCondition": {
+            "Fn::Equals": [
+                {
+                    "Ref": "ElastiCacheEnable"
+                },
+                "true"
             ]
         }
     },
@@ -596,6 +683,45 @@
                 }
             }
         },
+        "ElastiCacheStack":{
+            "Type": "AWS::CloudFormation::Stack",
+            "Condition": "ElastiCacheEnableCondition",
+            "Properties": {
+                "TemplateURL": {
+                    "Fn::Sub": "https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}templates/elasticache.template"
+                },
+                "Parameters":{
+                    "Subnets": {
+                        "Fn::Join": [
+                            ",",
+                            [
+                                {
+                                    "Ref": "PrivateSubnet1ID"
+                                },
+                                {
+                                    "Ref": "PrivateSubnet2ID"
+                                }
+                            ]
+                        ]
+                    },
+                    "ElastiCacheSecurityGroup":{
+                        "Fn::GetAtt": [
+                            "SecurityGroupsStack",
+                            "Outputs.ElastiCacheSecurityGroup"
+                        ]
+                    },
+                    "AutoMinorVersionUpgrade":{
+                        "Ref": "ElastiCacheAutoMinorVersionUpgrade"
+                    },
+                    "NodeType":{
+                        "Ref": "ElastiCacheNodeType"
+                    },
+                    "NumberOfNode":{
+                        "Ref": "ElastiCacheNumberOfNodes"
+                    }
+                }
+            }
+        },
         "WebserverStack": {
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
@@ -643,6 +769,18 @@
                     "KeyPairName": {
                         "Ref": "KeyPairName"
                     },
+                    "ElastiCacheEndpointAddress": {
+                        "Fn::If":[
+                            "ElastiCacheEnableCondition",
+                            {
+                                "Fn::GetAtt": [
+                                    "ElastiCacheStack",
+                                    "Outputs.ElastiCacheClusterEndPoint"
+                                ]
+                            },
+                            ""
+                        ]
+                    },
                     "DBEndpointAddress": {
                         "Fn::GetAtt": [
                             "RDSAuroraStack",
@@ -687,6 +825,16 @@
                     },
                     "CertificateArn": {
                         "Ref": "CertificateArn"
+                    },
+                    "ElastiCacheEnable": {
+                        "Ref": "ElastiCacheEnable"
+                    },
+                    "ElastiCacheClusterId": {
+                        "Fn::If":[
+                            "ElastiCacheEnableCondition",
+                            {"Fn::GetAtt": ["ElastiCacheStack", "Outputs.ElastiCacheClusterId"]},
+                            ""
+                        ]
                     }
                 }
             }

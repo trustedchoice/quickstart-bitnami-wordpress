@@ -21,6 +21,25 @@
         "BastionSecurityGroupID": {
             "Description": "ID of the Bastion Security Group (e.g., sg-1d2c3b4a)",
             "Type": "AWS::EC2::SecurityGroup::Id"
+        },
+        "ElastiCacheEnable":{
+            "Description": "Enable ElastiCache",
+            "AllowedValues": [
+                "true",
+                "false"
+            ],
+            "Default": "true",
+            "Type": "String"
+        }
+    },
+    "Conditions":{
+        "ElastiCacheEnableCondition":{
+            "Fn::Equals": [
+                {
+                    "Ref": "ElastiCacheEnable"
+                },
+                "true"
+            ]
         }
     },
     "Resources": {
@@ -157,6 +176,50 @@
                 ]
             }
         },
+        "ElastiCacheSecurityGroup": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Condition": "ElastiCacheEnableCondition",
+            "Properties": {
+                "GroupDescription": "Allow access to ElastiCache-Memcached Port (AWS Quick Start)",
+                "VpcId": {
+                    "Ref": "VPC"
+                },
+                "SecurityGroupIngress": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "11211",
+                        "ToPort": "11211",
+                        "SourceSecurityGroupId": {
+                            "Fn::GetAtt": [
+                                "WebServerSecurityGroup",
+                                "GroupId"
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "SecurityGroupRuleElastiCache": {
+            "Type": "AWS::EC2::SecurityGroupEgress",
+            "Condition": "ElastiCacheEnableCondition",
+            "Properties": {
+                "IpProtocol": "tcp",
+                "FromPort": "11211",
+                "ToPort": "11211",
+                "DestinationSecurityGroupId": {
+                    "Fn::GetAtt": [
+                        "ElastiCacheSecurityGroup",
+                        "GroupId"
+                    ]
+                },
+                "GroupId": {
+                    "Fn::GetAtt": [
+                        "WebServerSecurityGroup",
+                        "GroupId"
+                    ]
+                }
+            }
+        },
         "SecurityGroupRuleAppDB": {
             "Type": "AWS::EC2::SecurityGroupEgress",
             "Properties": {
@@ -221,6 +284,16 @@
             "Description": "EFS Security Group",
             "Value": {
                 "Ref": "EFSSecurityGroup"
+            }
+        },
+        "ElastiCacheSecurityGroup": {
+            "Description": "ElastiCache Security Group",
+            "Value": {
+                "Fn::If":[
+                    "ElastiCacheEnableCondition",
+                    {"Ref": "ElastiCacheSecurityGroup"},
+                    ""
+                ]
             }
         }
     }

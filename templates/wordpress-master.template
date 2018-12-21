@@ -68,6 +68,17 @@
                 },
                 {
                     "Label": {
+                        "default": "ElastiCache Configuration"
+                    },
+                    "Parameters": [
+                        "ElastiCacheEnable",
+                        "ElastiCacheAutoMinorVersionUpgrade",
+                        "ElastiCacheNodeType",
+                        "ElastiCacheNumberOfNodes"
+                    ]
+                },
+                {
+                    "Label": {
                         "default": "AWS Quick Start Configuration"
                     },
                     "Parameters": [
@@ -163,6 +174,18 @@
                 },
                 "WebServerMinSize": {
                     "default": "Min Number of Instances"
+                },
+                "ElastiCacheEnable":{
+                    "default": "Enable ElastiCache"
+                },
+                "ElastiCacheAutoMinorVersionUpgrade":{
+                    "default": "Enable ElastiCache Auto Minor Version Upgrade"
+                },
+                "ElastiCacheNodeType":{
+                    "default": "ElastiCache Node Type"
+                },
+                "ElastiCacheNumberOfNodes":{
+                    "default": "Number of ElastiCache Nodes"
                 }
             }
         }
@@ -536,6 +559,62 @@
             "Default": "1",
             "Description": "Minimum number of WordPress instances in the Auto Scaling group",
             "Type": "Number"
+        },
+        "ElastiCacheEnable": {
+            "AllowedValues": [
+                "true",
+                "false"
+            ],
+            "Default": "true",
+            "Description": "Enable ElastiCache Memcached",
+            "Type": "String"
+        },
+        "ElastiCacheAutoMinorVersionUpgrade":{
+            "AllowedValues": [
+                "true",
+                "false"
+            ],
+            "Default": "true",
+            "Description": "Select true/false to setup Auto Minor Version upgrade",
+            "Type": "String"
+        },
+        "ElastiCacheNodeType": {
+            "AllowedValues": [
+                "cache.t2.micro",
+                "cache.t2.small",
+                "cache.t2.medium",
+                "cache.m3.medium",
+                "cache.m3.large",
+                "cache.m3.xlarge",
+                "cache.m3.2xlarge",
+                "cache.m4.large",
+                "cache.m4.xlarge",
+                "cache.m4.2xlarge",
+                "cache.m4.4xlarge",
+                "cache.m4.10xlarge",
+                "cache.r3.large",
+                "cache.r3.xlarge",
+                "cache.r3.2xlarge",
+                "cache.r3.4xlarge",
+                "cache.r3.8xlarge",
+                "cache.r4.large",
+                "cache.r4.xlarge",
+                "cache.r4.2xlarge",
+                "cache.r4.4xlarge",
+                "cache.r4.8xlarge",
+                "cache.r4.16xlarge"
+            ],
+            "ConstraintDescription": "Must select a valid ElastiCache node type.",
+            "Default": "cache.t2.micro",
+            "Description": "The compute and memory capacity of nodes in a cache cluster.",
+            "Type": "String"
+        },
+        "ElastiCacheNumberOfNodes": {
+            "Default": "2",
+            "MinValue": "1",
+            "MaxValue": "20",
+            "Description": "The number of cache nodes that the cache cluster should have.",
+            "Type": "Number"
         }
     },
     "Rules": {
@@ -701,7 +780,7 @@
             }
         },
         "ConfigureSSLStack": {
-			      "DependsOn":"CopyLambdaStack",
+            "DependsOn":"CopyLambdaStack",
             "Condition":"UseSSL",
             "Type":"AWS::CloudFormation::Stack",
             "Properties":{
@@ -851,6 +930,18 @@
                     },
                     "ALBAccessCIDR": {
                         "Ref": "ALBAccessCIDR"
+                    },
+                    "ElastiCacheEnable": {
+                        "Ref": "ElastiCacheEnable"
+                    },
+                    "ElastiCacheAutoMinorVersionUpgrade":{
+                        "Ref": "ElastiCacheAutoMinorVersionUpgrade"
+                    },
+                    "ElastiCacheNodeType":{
+                        "Ref": "ElastiCacheNodeType"
+                    },
+                    "ElastiCacheNumberOfNodes":{
+                        "Ref": "ElastiCacheNumberOfNodes"
                     }
                 }
             }
