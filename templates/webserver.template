@@ -634,8 +634,47 @@
                 ]
             }
         },
-        "ALBListener": {
+        "ALBListenerHTTP": {
             "Type": "AWS::ElasticLoadBalancingV2::Listener",
+            "Properties": {
+                "DefaultActions": [
+                    {
+                        "Fn::If": [
+                            "UseSSL",
+                            {
+                                "Type": "redirect",
+                                "RedirectConfig": {
+                                  "Host" : "#{host}",
+                                  "Path" : "/#{path}",
+                                  "Port" : 443,
+                                  "Protocol" : "HTTPS",
+                                  "StatusCode" : "HTTP_301"
+                                }
+                            },
+                            {
+                                "Type": "forward",
+                                "TargetGroupArn": {
+                                    "Ref": "ALBTargetGroup"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "LoadBalancerArn": {
+                    "Ref": "ApplicationLoadBalancer"
+                },
+                "Port": 80,
+                "Protocol": "HTTP",
+                "Certificates": [
+                    {
+                        "Ref": "AWS::NoValue"
+                    }
+                ]
+            }
+        },
+        "ALBListenerHTTPS": {
+            "Type": "AWS::ElasticLoadBalancingV2::Listener",
+            "Condition": "UseSSL",
             "Properties": {
                 "DefaultActions": [
                     {
@@ -648,33 +687,13 @@
                 "LoadBalancerArn": {
                     "Ref": "ApplicationLoadBalancer"
                 },
-                "Port": {
-                    "Fn::If": [
-                        "UseSSL",
-                        443,
-                        80
-                    ]
-                },
-                "Protocol": {
-                    "Fn::If": [
-                        "UseSSL",
-                        "HTTPS",
-                        "HTTP"
-                    ]
-                },
+                "Port": 443,
+                "Protocol": "HTTPS",
                 "Certificates": [
                     {
-                        "Fn::If": [
-                            "UseSSL",
-                            {
-                                "CertificateArn": {
-                                    "Ref": "CertificateArn"
-                                }
-                            },
-                            {
-                                "Ref": "AWS::NoValue"
-                            }
-                        ]
+                        "CertificateArn": {
+                            "Ref": "CertificateArn"
+                        }
                     }
                 ]
             }
