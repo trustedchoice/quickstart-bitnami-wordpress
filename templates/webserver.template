@@ -347,40 +347,40 @@
     "Mappings": {
         "AWSAMIRegionMap": {
             "AMI": {
-                "BITNAMIWP": "bitnami-wordpress-5.1.1-1-linux-debian-9-x86_64-hvm-ebs-high-availability-nami"
+                "BITNAMIWP": "bitnami-wordpress-5.1.1-1-r01-linux-debian-9-x86_64-hvm-ebs-high-availability-nami"
             },
             "ap-northeast-1": {
-                "BITNAMIWP": "ami-08ba6b0d63499f3bd"
+                "BITNAMIWP": "ami-0ed5b0fc72aa552e9"
             },
             "ap-northeast-2": {
-                "BITNAMIWP": "ami-0b67d3c328706391b"
+                "BITNAMIWP": "ami-0eabbc8bf92b7af0f"
             },
             "ap-southeast-1": {
-                "BITNAMIWP": "ami-0d414496575ae6e70"
+                "BITNAMIWP": "ami-08c9e2a1d704d8d94"
             },
             "ap-southeast-2": {
-                "BITNAMIWP": "ami-0d64b12943ce95d11"
+                "BITNAMIWP": "ami-058028ee5d75c943e"
             },
             "eu-central-1": {
-                "BITNAMIWP": "ami-0305335a130d70de5"
+                "BITNAMIWP": "ami-094778a6af731fad1"
             },
             "eu-west-1": {
-                "BITNAMIWP": "ami-0ee37cefd234fc391"
+                "BITNAMIWP": "ami-0e31aebae56f5c6ac"
             },
             "eu-west-2": {
-                "BITNAMIWP": "ami-0e02754cbd4e60521"
+                "BITNAMIWP": "ami-05f364d6d0f1f4070"
             },
             "us-east-1": {
-                "BITNAMIWP": "ami-00c5d93ddceab8f97"
+                "BITNAMIWP": "ami-0e9e7909d4105bee5"
             },
             "us-east-2": {
-                "BITNAMIWP": "ami-00e9d45ac1d1159a7"
+                "BITNAMIWP": "ami-08902bacb7227ac77"
             },
             "us-west-1": {
-                "BITNAMIWP": "ami-0bcc11f37e6dcad03"
+                "BITNAMIWP": "ami-032693035756f0816"
             },
             "us-west-2": {
-                "BITNAMIWP": "ami-093d22099be52d689"
+                "BITNAMIWP": "ami-07af63de5c815d885"
             }
         }
     },
@@ -644,11 +644,11 @@
                             {
                                 "Type": "redirect",
                                 "RedirectConfig": {
-                                  "Host" : "#{host}",
-                                  "Path" : "/#{path}",
-                                  "Port" : 443,
-                                  "Protocol" : "HTTPS",
-                                  "StatusCode" : "HTTP_301"
+                                    "Host": "#{host}",
+                                    "Path": "/#{path}",
+                                    "Port": 443,
+                                    "Protocol": "HTTPS",
+                                    "StatusCode": "HTTP_301"
                                 }
                             },
                             {
