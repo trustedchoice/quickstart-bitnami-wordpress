@@ -281,7 +281,6 @@
     },
     "Outputs": {
         "ACMCertificate": {
-            "Condition": "SetupRoute53",
             "Description": "ARN of the ACM-Generated SSL Certificate",
             "Value": {
                 "Fn::If": [

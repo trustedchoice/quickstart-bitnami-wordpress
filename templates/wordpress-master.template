@@ -676,9 +676,9 @@
             { "Fn::Not": [ { "Fn::Equals": [{ "Ref": "CertificateArn"}, "" ] } ] }
           ]
         },
-        "UserProvidedSSL":{
+        "GenerateSSLCertificate": {
           "Fn::And": [
-            { "Fn::Not": [{ "Fn::Equals": [{ "Ref": "CertificateArn"},""]}]},
+            { "Fn::Equals": [{ "Ref": "CertificateArn"},""]},
             { "Condition":"UseSSL" }
           ]
         }
@@ -770,6 +770,7 @@
         },
         "CopyLambdaStack": {
             "DependsOn":"VPCStack",
+            "Condition": "GenerateSSLCertificate",
             "Type":"AWS::CloudFormation::Stack",
             "Properties":{
                 "TemplateURL":{
@@ -786,8 +787,7 @@
             }
         },
         "ConfigureSSLStack": {
-            "DependsOn":"CopyLambdaStack",
-            "Condition":"UseSSL",
+            "Condition":"GenerateSSLCertificate",
             "Type":"AWS::CloudFormation::Stack",
             "Properties":{
                 "TemplateURL":{
@@ -905,15 +905,15 @@
                           "UseSSL",
                           {
                             "Fn::If": [
-                                "UserProvidedSSL",
-                                {
-                                  "Ref": "CertificateArn"
-                                },
+                                "GenerateSSLCertificate",
                                 {
                                   "Fn::GetAtt": [
                                       "ConfigureSSLStack",
                                       "Outputs.ACMCertificate"
                                   ]
+                                },
+                                {
+                                  "Ref": "CertificateArn"
                                 }
                             ]
                           },
