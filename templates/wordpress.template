@@ -832,6 +832,9 @@
                     "CertificateArn": {
                         "Ref": "CertificateArn"
                     },
+                    "HostedZoneID": {
+                        "Ref": "HostedZoneID"
+                    },
                     "ElastiCacheEnable": {
                         "Ref": "ElastiCacheEnable"
                     },

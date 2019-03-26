@@ -41,7 +41,8 @@
                     },
                     "Parameters": [
                         "DomainName",
-                        "CertificateArn"
+                        "CertificateArn",
+                        "HostedZoneID"
                     ]
                 },
                 {
@@ -329,6 +330,12 @@
             "Type": "String",
             "Default": ""
         },
+        "HostedZoneID": {
+            "Description": "(Optional) Route 53 Hosted Zone ID of the domain name. If left blank route 53 will not be configured and DNS must be setup manually. If you specify this, you must also specify a Domain name",
+            "Type": "String",
+            "Default": "",
+            "MaxLength": "32"
+        },
         "ElastiCacheEnable": {
             "Description": "Enable ElastiCache",
             "AllowedValues": [
@@ -443,13 +450,29 @@
             ]
         },
         "AddDNSRecord": {
-            "Fn::Not": [
+            "Fn::And": [
                 {
-                    "Fn::Equals": [
+                    "Fn::Not": [
                         {
-                            "Ref": "DomainName"
-                        },
-                        ""
+                            "Fn::Equals": [
+                                {
+                                    "Ref": "DomainName"
+                                },
+                                ""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "Fn::Not": [
+                        {
+                            "Fn::Equals": [
+                                {
+                                    "Ref": "HostedZoneID"
+                                },
+                                ""
+                            ]
+                        }
                     ]
                 }
             ]
@@ -696,6 +719,33 @@
                         }
                     }
                 ]
+            }
+        },
+        "Route53RecordSet": {
+            "Condition": "AddDNSRecord",
+            "Type": "AWS::Route53::RecordSet",
+            "Properties": {
+                "Type": "A",
+                "Name": {
+                    "Ref": "DomainName"
+                },
+                "AliasTarget": {
+                    "HostedZoneId": {
+                        "Fn::GetAtt": [
+                            "ApplicationLoadBalancer",
+                            "CanonicalHostedZoneID"
+                        ]
+                    },
+                    "DNSName": {
+                        "Fn::GetAtt": [
+                            "ApplicationLoadBalancer",
+                            "DNSName"
+                        ]
+                    }
+                },
+                "HostedZoneId": {
+                    "Ref": "HostedZoneID"
+                }
             }
         },
         "WebServerASG": {
