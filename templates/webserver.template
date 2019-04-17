@@ -2,6 +2,14 @@
     "AWSTemplateFormatVersion": "2010-09-09",
     "Description": "WordPress Webserver Template. (qs-1ot302h72)",
     "Metadata": {
+        "AWSAMIRegionMap":{
+            "Filters":{
+                "BITNAMIWP":{
+                    "name":"bitnami-wordpress-*-linux-debian-9-x86_64-hvm-ebs-high-availability-nami",
+                    "owner-id":"979382823631"
+                }
+            }
+        },
         "AWS::CloudFormation::Interface": {
             "ParameterGroups": [
                 {
