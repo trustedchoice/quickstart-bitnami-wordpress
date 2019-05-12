@@ -2,11 +2,11 @@
     "AWSTemplateFormatVersion": "2010-09-09",
     "Description": "WordPress Webserver Template. (qs-1ot302h72)",
     "Metadata": {
-        "AWSAMIRegionMap":{
-            "Filters":{
-                "BITNAMIWP":{
-                    "name":"bitnami-wordpress-*-linux-debian-9-x86_64-hvm-ebs-high-availability-nami",
-                    "owner-id":"979382823631"
+        "AWSAMIRegionMap": {
+            "Filters": {
+                "BITNAMIWP": {
+                    "name": "bitnami-wordpress-*-linux-debian-9-x86_64-hvm-ebs-high-availability-nami",
+                    "owner-id": "979382823631"
                 }
             }
         },
@@ -374,40 +374,40 @@
     "Mappings": {
         "AWSAMIRegionMap": {
             "AMI": {
-                "BITNAMIWP": "bitnami-wordpress-5.1.1-1-r03-linux-debian-9-x86_64-hvm-ebs-high-availability-nami"
+                "BITNAMIWP": "bitnami-wordpress-5.2.0-0-r01-linux-debian-9-x86_64-hvm-ebs-high-availability-nami"
             },
             "ap-northeast-1": {
-                "BITNAMIWP": "ami-00b2cbb2fecf8bdcf"
+                "BITNAMIWP": "ami-0c27316082ba3fbf3"
             },
             "ap-northeast-2": {
-                "BITNAMIWP": "ami-0b1c631558beb2db4"
+                "BITNAMIWP": "ami-0d1623f40898a88e4"
             },
             "ap-southeast-1": {
-                "BITNAMIWP": "ami-0e7f70f15d569d922"
+                "BITNAMIWP": "ami-0313358b778f0d1fd"
             },
             "ap-southeast-2": {
-                "BITNAMIWP": "ami-06c2929f899a657de"
+                "BITNAMIWP": "ami-0135230cf4df05cad"
             },
             "eu-central-1": {
-                "BITNAMIWP": "ami-08db0e8bd3978776a"
+                "BITNAMIWP": "ami-0bdbfb5a1b0fe1739"
             },
             "eu-west-1": {
-                "BITNAMIWP": "ami-0bcc8f4012c1e410c"
+                "BITNAMIWP": "ami-0b4105f1c4bad27bc"
             },
             "eu-west-2": {
-                "BITNAMIWP": "ami-024268aed1d0f0389"
+                "BITNAMIWP": "ami-09ac2213723d5fefe"
             },
             "us-east-1": {
-                "BITNAMIWP": "ami-07e62726eec92269f"
+                "BITNAMIWP": "ami-00c88640f03a12ae0"
             },
             "us-east-2": {
-                "BITNAMIWP": "ami-0a81eebd63b4f5c33"
+                "BITNAMIWP": "ami-0fe0478d00d69ac26"
             },
             "us-west-1": {
-                "BITNAMIWP": "ami-0d74f2a278c3f3a95"
+                "BITNAMIWP": "ami-0951c1f37b1e21f41"
             },
             "us-west-2": {
-                "BITNAMIWP": "ami-0c684353c13f54d5c"
+                "BITNAMIWP": "ami-004e1409784d088de"
             }
         }
     },
