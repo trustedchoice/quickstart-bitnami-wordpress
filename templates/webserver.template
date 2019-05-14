@@ -90,10 +90,10 @@
             "Type": "String"
         },
         "QSS3KeyPrefix": {
-            "AllowedPattern": "^[^/][0-9a-zA-Z-/._]*[^/]$",
-            "ConstraintDescription": "S3 key prefix can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slash (/). It cannot start or end with forward slash (/) because they are automatically appended.",
+            "AllowedPattern": "^[0-9a-zA-Z-/._]*$",
+            "ConstraintDescription": "S3 key prefix can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slash (/).",
             "Description": " Alphanumeric string which identifies the S3 key prefix used to simulate a folder for your copy of the Quick Start assets if you decided to customize or extend them for your own use.",
-            "Default": "quickstart-bitnami-wordpress",
+            "Default": "quickstart-bitnami-wordpress/",
             "Type": "String"
         },
         "AutoScalingNotificationEmail": {
