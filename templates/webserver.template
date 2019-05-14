@@ -92,7 +92,7 @@
         "QSS3KeyPrefix": {
             "AllowedPattern": "^[0-9a-zA-Z-/._]*$",
             "ConstraintDescription": "S3 key prefix can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slash (/).",
-            "Description": " Alphanumeric string which identifies the S3 key prefix used to simulate a folder for your copy of the Quick Start assets if you decided to customize or extend them for your own use.",
+            "Description": "\u00a0Alphanumeric string which identifies the S3 key prefix used to simulate a folder for your copy of the Quick Start assets if you decided to customize or extend them for your own use.",
             "Default": "quickstart-bitnami-wordpress/",
             "Type": "String"
         },
@@ -300,7 +300,7 @@
             "Type": "String"
         },
         "WordpressAdminPassword": {
-          "Description": "8-41 character, alphanumeric string to be used as the WordPress site admin account password (admin username is 'user').",
+            "Description": "8-41 character, alphanumeric string to be used as the WordPress site admin account password (admin username is 'user').",
             "Type": "String",
             "MinLength": "8",
             "MaxLength": "41",
@@ -382,40 +382,40 @@
     "Mappings": {
         "AWSAMIRegionMap": {
             "AMI": {
-                "BITNAMIWP": "bitnami-wordpress-5.2.0-0-r01-linux-debian-9-x86_64-hvm-ebs-high-availability-nami"
+                "BITNAMIWP": "bitnami-wordpress-5.2.0-2-r02-linux-debian-9-x86_64-hvm-ebs-high-availability-nami"
             },
             "ap-northeast-1": {
-                "BITNAMIWP": "ami-0c27316082ba3fbf3"
+                "BITNAMIWP": "ami-07e7082ca642653c6"
             },
             "ap-northeast-2": {
-                "BITNAMIWP": "ami-0d1623f40898a88e4"
+                "BITNAMIWP": "ami-0d531ba4190830925"
             },
             "ap-southeast-1": {
-                "BITNAMIWP": "ami-0313358b778f0d1fd"
+                "BITNAMIWP": "ami-09389caa762de2e07"
             },
             "ap-southeast-2": {
-                "BITNAMIWP": "ami-0135230cf4df05cad"
+                "BITNAMIWP": "ami-089f4beabec4ecc7e"
             },
             "eu-central-1": {
-                "BITNAMIWP": "ami-0bdbfb5a1b0fe1739"
+                "BITNAMIWP": "ami-0489a6a7c0b756376"
             },
             "eu-west-1": {
-                "BITNAMIWP": "ami-0b4105f1c4bad27bc"
+                "BITNAMIWP": "ami-0041e3ce14c77e115"
             },
             "eu-west-2": {
-                "BITNAMIWP": "ami-09ac2213723d5fefe"
+                "BITNAMIWP": "ami-00fff7e246634034c"
             },
             "us-east-1": {
-                "BITNAMIWP": "ami-00c88640f03a12ae0"
+                "BITNAMIWP": "ami-09548ce15b3c4ee0c"
             },
             "us-east-2": {
-                "BITNAMIWP": "ami-0fe0478d00d69ac26"
+                "BITNAMIWP": "ami-0439ac18c17b96dfd"
             },
             "us-west-1": {
-                "BITNAMIWP": "ami-0951c1f37b1e21f41"
+                "BITNAMIWP": "ami-0c3359bb3ecbabdad"
             },
             "us-west-2": {
-                "BITNAMIWP": "ami-004e1409784d088de"
+                "BITNAMIWP": "ami-002418535c76dca86"
             }
         }
     },
@@ -475,8 +475,30 @@
         },
         "AddDNSRecord": {
             "Fn::And": [
-                { "Fn::Not": [ { "Fn::Equals": [ { "Ref": "DomainName" }, "" ] } ] },
-                { "Fn::Not": [ { "Fn::Equals": [ { "Ref": "HostedZoneID" }, "" ] } ] }
+                {
+                    "Fn::Not": [
+                        {
+                            "Fn::Equals": [
+                                {
+                                    "Ref": "DomainName"
+                                },
+                                ""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "Fn::Not": [
+                        {
+                            "Fn::Equals": [
+                                {
+                                    "Ref": "HostedZoneID"
+                                },
+                                ""
+                            ]
+                        }
+                    ]
+                }
             ]
         },
         "ElastiCacheEnableCondition": {
