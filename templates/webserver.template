@@ -2,11 +2,11 @@
     "AWSTemplateFormatVersion": "2010-09-09",
     "Description": "WordPress Webserver Template. (qs-1ot302h72)",
     "Metadata": {
-        "AWSAMIRegionMap":{
-            "Filters":{
-                "BITNAMIWP":{
-                    "name":"bitnami-wordpress-*-linux-debian-9-x86_64-hvm-ebs-high-availability-nami",
-                    "owner-id":"979382823631"
+        "AWSAMIRegionMap": {
+            "Filters": {
+                "BITNAMIWP": {
+                    "name": "bitnami-wordpress-*-linux-debian-9-x86_64-hvm-ebs-high-availability-nami",
+                    "owner-id": "979382823631"
                 }
             }
         },
@@ -60,6 +60,7 @@
                     "Parameters": [
                         "WordpressAdminPassword",
                         "WebServerInstanceType",
+                        "WebServerAMI",
                         "WebServerInstanceMonitoring",
                         "AutoScalingNotificationEmail",
                         "WebServerMinSize",
@@ -83,22 +84,22 @@
     "Parameters": {
         "QSS3BucketName": {
             "AllowedPattern": "^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$",
-            "ConstraintDescription": "AWS Quick Start bucket name can include numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen (-).",
+            "ConstraintDescription": "S3 bucket name can include numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen (-).",
             "Default": "aws-quickstart",
-            "Description": "S3 bucket name for the AWS Quick Start assets. AWS Quick Start bucket name can include numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen (-)",
+            "Description": "Alphanumeric string which identifies the S3 bucket name for the Quick Start assets. It's the bucket to store the copy of the Quick Start assets if you decided to customize or extend them for your own use.",
             "Type": "String"
         },
         "QSS3KeyPrefix": {
-            "AllowedPattern": "^[0-9a-zA-Z-/]*$",
-            "ConstraintDescription": "AWS Quick Start key prefix can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slash (/). It cannot start or end with forward slash (/) because they are automatically appended.",
+            "AllowedPattern": "^[0-9a-zA-Z-/._]*$",
+            "ConstraintDescription": "S3 key prefix can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slash (/).",
+            "Description": "Alphanumeric string which identifies the S3 key prefix used to simulate a folder for your copy of the Quick Start assets if you decided to customize or extend them for your own use.",
             "Default": "quickstart-bitnami-wordpress/",
-            "Description": "S3 key prefix for the AWS Quick Start assets.AWS Quick Start key prefix can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slash (/). It cannot start or end with forward slash (/) because they are automatically appended",
             "Type": "String"
         },
         "AutoScalingNotificationEmail": {
             "AllowedPattern": "([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)",
             "ConstraintDescription": "Must be a valid email address.",
-            "Description": "Email address to notify Auto Scaling operations",
+            "Description": "Email address to notify any scaling operation. When an Autoscaling event occurs, an email is sent to this mail address.",
             "Type": "String"
         },
         "WebServerSubnets": {
@@ -130,6 +131,12 @@
                 "t3.large",
                 "t3.xlarge",
                 "t3.2xlarge",
+                "t3a.micro",
+                "t3a.small",
+                "t3a.medium",
+                "t3a.large",
+                "t3a.xlarge",
+                "t3a.2xlarge",
                 "m3.medium",
                 "m3.large",
                 "m3.xlarge",
@@ -259,11 +266,11 @@
             ],
             "ConstraintDescription": "Choose an instance type.",
             "Default": "t2.small",
-            "Description": "Select WordPress instance size",
+            "Description": "Select Amazon EC2 instance type for the WordPress instances.",
             "Type": "String"
         },
         "WebServerInstanceMonitoring": {
-            "Description": "Set enhanced monitoring for WordPress instances",
+            "Description": "Set enhanced monitoring for WordPress instances. When enabled, EC2 console displays monitoring graphs with a 1-minute resolution, if not it will be 5-minute resolution.",
             "Type": "String",
             "Default": "Enabled",
             "AllowedValues": [
@@ -278,7 +285,7 @@
         "KeyPairName": {
             "ConstraintDescription": "Must be the name of an existing EC2 KeyPair.",
             "Default": "id_rsa_aws",
-            "Description": "Name of an existing EC2 KeyPair to enable SSH access to the instances. Use 'bitnami' user for the ssh connection to the WordPress instances",
+            "Description": "The name of an existing public/private key pair, which allows you to securely connect to your instance after it launches. Use 'ec2-user' as SSH username for the connection to the Bastion hosts, then use 'bitnami' as SSH username for the connection to the WordPress instances.",
             "Type": "AWS::EC2::KeyPair::KeyName"
         },
         "ElastiCacheEndpointAddress": {
@@ -292,14 +299,14 @@
         "DBMasterUserPassword": {
             "AllowedPattern": "(?=\\S)[^@/\"\\r\\n\\t\\f\\s]*",
             "ConstraintDescription": "Min 8 chars. Cannot contain white space, @, /, \"",
-            "Description": "The database admin account password (username is 'root')",
+            "Description": "8-41 character, alphanumeric string to be used as the database admin account password (database admin username is 'root').",
             "MaxLength": "41",
             "MinLength": "8",
             "NoEcho": "True",
             "Type": "String"
         },
         "WordpressAdminPassword": {
-            "Description": "The WordPress site admin account password (username is 'user')",
+            "Description": "8-41 character, alphanumeric string to be used as the WordPress site admin account password (admin username is 'user').",
             "Type": "String",
             "MinLength": "8",
             "MaxLength": "41",
@@ -308,30 +315,30 @@
             "NoEcho": "true"
         },
         "WebServerMinSize": {
-            "Default": "1",
-            "Description": "Minimum number of WordPress instances in Auto Scaling group",
+            "Default": "2",
+            "Description": "Minimum number of WordPress EC2 instances in the Auto Scaling group. It specifies the minimum number of replicas when scaling down.",
             "Type": "Number"
         },
         "WebServerMaxSize": {
             "Default": "12",
-            "Description": "Maximum number of WordPress instances in Auto Scaling group",
+            "Description": "Maximum number of WordPress EC2 instances in the Auto Scaling group. It specifies the maximum number of replicas when scaling up.",
             "Type": "Number"
         },
         "WebServerDesiredCapacity": {
             "Default": "2",
-            "Description": "Desired number of WordPress instances in Auto Scaling group",
+            "Description": "Desired number of WordPress instances. This will set the number of instances when the scaling group is created, then the autoscaler will increase or decrease the current number of instances as the scaling events occur.",
             "Type": "Number"
         },
         "VPCID": {
-            "Description": "Select the VPC to deploy WordPress",
+            "Description": "The ID of your existing VPC (e.g. vpc-123456789)",
             "Type": "AWS::EC2::VPC::Id"
         },
         "PublicSubnet1ID": {
-            "Description": "Public Subnet ID 1 located in Availability Zone 1",
+            "Description": "The ID of the public (DMZ) subnet in Availability Zone 1 in your existing VPC (e.g., subnet-a12345aa1).",
             "Type": "AWS::EC2::Subnet::Id"
         },
         "PublicSubnet2ID": {
-            "Description": "Public Subnet ID 2 located in Availability Zone 2",
+            "Description": "The ID of the public (DMZ) subnet in Availability Zone 2 in your existing VPC (e.g., subnet-a12345aa2).",
             "Type": "AWS::EC2::Subnet::Id"
         },
         "ALBSecurityGroup": {
@@ -339,7 +346,7 @@
             "Type": "AWS::EC2::SecurityGroup::Id"
         },
         "DomainName": {
-            "Description": "(Optional) Domain name for the web site",
+            "Description": "(Optional) Domain name for the web site. It must be an existing, publicly resolvable domain.",
             "Type": "String",
             "Default": "",
             "AllowedPattern": "^((\\w+\\.)+\\w+){0,1}$",
@@ -356,8 +363,15 @@
             "Default": "",
             "MaxLength": "32"
         },
+        "WebServerAMI": {
+            "Default": "",
+            "Description": "(Optional) Select AMI to use for the WordPress instances. When it's left blank, the default WordPress AMI for your AWS region will be used. When setting an AMI, it must be available in your current region.",
+            "AllowedPattern": "^(ami-([a-zA-Z0-9]{8,})){0,1}$",
+            "ConstraintDescription": "Must be a valid AMI.",
+            "Type": "String"
+        },
         "ElastiCacheEnable": {
-            "Description": "Enable ElastiCache",
+            "Description": "Select true/false to create a ElastiCache cluster for Memcached. This technology caches frequently used objects. Using the W3TC plugin, it can be used to reduce the number of queries done to Aurora database, the rendered HTML pages and internal objets, hence improving the WordPress site performance.",
             "AllowedValues": [
                 "true",
                 "false"
@@ -374,40 +388,40 @@
     "Mappings": {
         "AWSAMIRegionMap": {
             "AMI": {
-                "BITNAMIWP": "bitnami-wordpress-5.1.1-1-r03-linux-debian-9-x86_64-hvm-ebs-high-availability-nami"
+                "BITNAMIWP": "bitnami-wordpress-5.2.0-3-r03-linux-debian-9-x86_64-hvm-ebs-high-availability-nami"
             },
             "ap-northeast-1": {
-                "BITNAMIWP": "ami-00b2cbb2fecf8bdcf"
+                "BITNAMIWP": "ami-0303ddc31c77b8297"
             },
             "ap-northeast-2": {
-                "BITNAMIWP": "ami-0b1c631558beb2db4"
+                "BITNAMIWP": "ami-07ffb8ea71cb1308d"
             },
             "ap-southeast-1": {
-                "BITNAMIWP": "ami-0e7f70f15d569d922"
+                "BITNAMIWP": "ami-05009f10e020af6af"
             },
             "ap-southeast-2": {
-                "BITNAMIWP": "ami-06c2929f899a657de"
+                "BITNAMIWP": "ami-08ec8552353b777ee"
             },
             "eu-central-1": {
-                "BITNAMIWP": "ami-08db0e8bd3978776a"
+                "BITNAMIWP": "ami-0a72693bb1f8f4e63"
             },
             "eu-west-1": {
-                "BITNAMIWP": "ami-0bcc8f4012c1e410c"
+                "BITNAMIWP": "ami-05d614efc6f279e7b"
             },
             "eu-west-2": {
-                "BITNAMIWP": "ami-024268aed1d0f0389"
+                "BITNAMIWP": "ami-0ba9f01d6c1e9a8d1"
             },
             "us-east-1": {
-                "BITNAMIWP": "ami-07e62726eec92269f"
+                "BITNAMIWP": "ami-0f6537ce14c08bf0b"
             },
             "us-east-2": {
-                "BITNAMIWP": "ami-0a81eebd63b4f5c33"
+                "BITNAMIWP": "ami-0333c84e2919e82e0"
             },
             "us-west-1": {
-                "BITNAMIWP": "ami-0d74f2a278c3f3a95"
+                "BITNAMIWP": "ami-074658f98ae01036e"
             },
             "us-west-2": {
-                "BITNAMIWP": "ami-0c684353c13f54d5c"
+                "BITNAMIWP": "ami-0abd6d51372185a00"
             }
         }
     },
@@ -442,29 +456,25 @@
     },
     "Conditions": {
         "UseSSL": {
-            "Fn::Or": [
+            "Fn::Not": [
                 {
-                    "Fn::Not": [
+                    "Fn::Equals": [
                         {
-                            "Fn::Equals": [
-                                {
-                                    "Ref": "DomainName"
-                                },
-                                ""
-                            ]
-                        }
+                            "Ref": "CertificateArn"
+                        },
+                        ""
                     ]
-                },
+                }
+            ]
+        },
+        "UseCustomAMI": {
+            "Fn::Not": [
                 {
-                    "Fn::Not": [
+                    "Fn::Equals": [
                         {
-                            "Fn::Equals": [
-                                {
-                                    "Ref": "CertificateArn"
-                                },
-                                ""
-                            ]
-                        }
+                            "Ref": "WebServerAMI"
+                        },
+                        ""
                     ]
                 }
             ]
@@ -707,12 +717,7 @@
                     "Ref": "ApplicationLoadBalancer"
                 },
                 "Port": 80,
-                "Protocol": "HTTP",
-                "Certificates": [
-                    {
-                        "Ref": "AWS::NoValue"
-                    }
-                ]
+                "Protocol": "HTTP"
             }
         },
         "ALBListenerHTTPS": {
@@ -872,12 +877,20 @@
             },
             "Properties": {
                 "ImageId": {
-                    "Fn::FindInMap": [
-                        "AWSAMIRegionMap",
+                    "Fn::If": [
+                        "UseCustomAMI",
                         {
-                            "Ref": "AWS::Region"
+                            "Ref": "WebServerAMI"
                         },
-                        "BITNAMIWP"
+                        {
+                            "Fn::FindInMap": [
+                                "AWSAMIRegionMap",
+                                {
+                                    "Ref": "AWS::Region"
+                                },
+                                "BITNAMIWP"
+                            ]
+                        }
                     ]
                 },
                 "UserData": {

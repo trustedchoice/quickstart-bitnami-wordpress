@@ -4,16 +4,16 @@
     "Parameters": {
         "QSS3BucketName": {
             "AllowedPattern": "^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$",
-            "ConstraintDescription": "Quick Start bucket name can include numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen (-).",
+            "ConstraintDescription": "S3 bucket name can include numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen (-).",
             "Default": "aws-quickstart",
-            "Description": "S3 bucket name for the Quick Start assets. Quick Start bucket name can include numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen (-).",
+            "Description": "Alphanumeric string which identifies the S3 bucket name for the Quick Start assets. It's the bucket to store the copy of the Quick Start assets if you decided to customize or extend them for your own use.",
             "Type": "String"
         },
         "QSS3KeyPrefix": {
-            "AllowedPattern": "^[0-9a-zA-Z-/]*$",
-            "ConstraintDescription": "Quick Start key prefix can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slash (/).",
+            "AllowedPattern": "^[0-9a-zA-Z-/._]*$",
+            "ConstraintDescription": "S3 key prefix can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slash (/).",
             "Default": "quickstart-codepipeline-bluegreen-deployment/",
-            "Description": "S3 key prefix for the Quick Start assets. Quick Start key prefix can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slash (/).",
+            "Description": "Alphanumeric string which identifies the S3 key prefix used to simulate a folder for your copy of the Quick Start assets if you decided to customize or extend them for your own use.",
             "Type": "String"
         }
     },
