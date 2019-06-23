@@ -388,40 +388,40 @@
     "Mappings": {
         "AWSAMIRegionMap": {
             "AMI": {
-                "BITNAMIWP": "bitnami-wordpress-5.2.1-1-r03-linux-debian-9-x86_64-hvm-ebs-high-availability-nami"
+                "BITNAMIWP": "bitnami-wordpress-5.2.2-0-r55-linux-debian-9-x86_64-hvm-ebs-high-availability-nami"
             },
             "ap-northeast-1": {
-                "BITNAMIWP": "ami-02dc944d05e13a000"
+                "BITNAMIWP": "ami-05c2068fad03d55f3"
             },
             "ap-northeast-2": {
-                "BITNAMIWP": "ami-01aade899304beaa3"
+                "BITNAMIWP": "ami-051ed9d9b9bc13814"
             },
             "ap-southeast-1": {
-                "BITNAMIWP": "ami-0eef6e886a31ed81b"
+                "BITNAMIWP": "ami-03adedaba5e7f1275"
             },
             "ap-southeast-2": {
-                "BITNAMIWP": "ami-06aa11c430c6210d6"
+                "BITNAMIWP": "ami-01d3ec55bf58e4e4e"
             },
             "eu-central-1": {
-                "BITNAMIWP": "ami-08f2b644b508d4a08"
+                "BITNAMIWP": "ami-0573388f77e748bf4"
             },
             "eu-west-1": {
-                "BITNAMIWP": "ami-093e71b226b634c50"
+                "BITNAMIWP": "ami-05fba6bd376c3ef24"
             },
             "eu-west-2": {
-                "BITNAMIWP": "ami-07e97d9da01e79e1d"
+                "BITNAMIWP": "ami-083ffd554237e6675"
             },
             "us-east-1": {
-                "BITNAMIWP": "ami-0a6209f00510c2022"
+                "BITNAMIWP": "ami-01dcab62d45506c8d"
             },
             "us-east-2": {
-                "BITNAMIWP": "ami-0f04aaa59ff02cde1"
+                "BITNAMIWP": "ami-02efbee4fa9b76d82"
             },
             "us-west-1": {
-                "BITNAMIWP": "ami-0c4a7d065b4c1ce5a"
+                "BITNAMIWP": "ami-0a0f1f9901b992f6c"
             },
             "us-west-2": {
-                "BITNAMIWP": "ami-02beee7d56f2e41cf"
+                "BITNAMIWP": "ami-0e28faa792b10a0cd"
             }
         }
     },
