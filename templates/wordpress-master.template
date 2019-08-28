@@ -373,7 +373,7 @@
         "ALBAccessCIDR": {
             "AllowedPattern": "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\\/([0-9]|[1-2][0-9]|3[0-2]))$",
             "ConstraintDescription": "CIDR block parameter must be in the form x.x.x.x/x",
-            "Default": "10.0.0.0/16",
+            "Default": "0.0.0.0/0",
             "Description": "Allowed CIDR block for external web access to the Application Load Balancer. It defines the block of IPs that can access the Load Balancer and, consequently, the WordPress site. Set it to 0.0.0.0/0 to make it accessible from anywhere.",
             "Type": "String"
         },
