@@ -42,4 +42,4 @@ If you'd like to submit code for this Quick Start, please review the [AWS Quick 
 
       }
 
-https://github.com/aws-quickstart/quickstart-bitnami-wordpress/commit/511126369dc4e543c3cc12df17e8ebb3836a628e
+Link to related commit: https://github.com/aws-quickstart/quickstart-bitnami-wordpress/commit/511126369dc4e543c3cc12df17e8ebb3836a628e
