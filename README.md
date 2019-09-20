@@ -20,3 +20,24 @@ For architectural details, best practices, step-by-step instructions, and custom
 
 To post feedback, submit feature ideas, or report bugs, use the **Issues** section of this GitHub repo.
 If you'd like to submit code for this Quick Start, please review the [AWS Quick Start Contributor's Kit](https://aws-quickstart.github.io/). 
+
+## Notable changes
+
+### 5.2.3-0 (2019/09/08)
+
+* This release fixes a bug in PHP-FPM's Logrotate configuration which could cause high disk space and/or inodes usage, if logs were rotated multiple times. Existing users can fix it by running the commands below:
+
+      $ sudo rm -rf /opt/bitnami/php/logs/*
+      $ sudo sed -i 's/\* /*.log /' /etc/logrotate.d/com.bitnami.php
+
+  The */etc/logrotate.d/com.bitnami.php* configuration file should look like this:
+
+      /opt/bitnami/php/logs/*.log {
+        weekly
+        rotate 150
+        dateext
+        compress
+        copytruncate
+        missingok
+
+      }
