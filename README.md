@@ -25,6 +25,7 @@ If you'd like to submit code for this Quick Start, please review the [AWS Quick 
 
 ### 5.2.3-0 (2019/09/08)
 
+https://github.com/aws-quickstart/quickstart-bitnami-wordpress/commit/511126369dc4e543c3cc12df17e8ebb3836a628e
 * This release fixes a bug in PHP-FPM's Logrotate configuration which could cause high disk space and/or inodes usage, if logs were rotated multiple times. Existing users can fix it by running the commands below:
 
       $ sudo rm -rf /opt/bitnami/php/logs/*
