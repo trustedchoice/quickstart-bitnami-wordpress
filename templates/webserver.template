@@ -436,46 +436,46 @@
     "Mappings": {
         "AWSAMIRegionMap": {
             "ap-northeast-1": {
-                "BITNAMIWP": "ami-0fe473d27bc3aca09"
+                "BITNAMIWP": "ami-0f13208338274200f"
             },
             "ap-northeast-2": {
-                "BITNAMIWP": "ami-08ce90898ccb22da4"
+                "BITNAMIWP": "ami-06608fc65b18da904"
             },
             "ap-south-1": {
-                "BITNAMIWP": "ami-011cf998e66b3cb7d"
+                "BITNAMIWP": "ami-0249873a69d9204f4"
             },
             "ap-southeast-1": {
-                "BITNAMIWP": "ami-0610e44153e76f34d"
+                "BITNAMIWP": "ami-0f28502e60109aabe"
             },
             "ap-southeast-2": {
-                "BITNAMIWP": "ami-0b0206a46d9c22bc1"
+                "BITNAMIWP": "ami-0b09d63417cfed564"
             },
             "ca-central-1": {
-                "BITNAMIWP": "ami-0e33c3fbf9a982f38"
+                "BITNAMIWP": "ami-05650af000bba387d"
             },
             "eu-central-1": {
-                "BITNAMIWP": "ami-039a6c6afe5da34eb"
+                "BITNAMIWP": "ami-0dbe91a03bad4ff61"
             },
             "eu-west-1": {
-                "BITNAMIWP": "ami-0cab254146def8873"
+                "BITNAMIWP": "ami-0a14eac827a4e54f2"
             },
             "eu-west-2": {
-                "BITNAMIWP": "ami-0c62f309fa2b5661f"
+                "BITNAMIWP": "ami-0b9ea7770d2c16cff"
             },
             "eu-west-3": {
-                "BITNAMIWP": "ami-092082c3224024f42"
+                "BITNAMIWP": "ami-086c527b1fc07cf32"
             },
             "us-east-1": {
-                "BITNAMIWP": "ami-03ad20c6ac33b8add"
+                "BITNAMIWP": "ami-05d7989e42b50e333"
             },
             "us-east-2": {
-                "BITNAMIWP": "ami-082c8b1d514deb23a"
+                "BITNAMIWP": "ami-0e0a0cdbccd7c0318"
             },
             "us-west-1": {
-                "BITNAMIWP": "ami-0d3b363639bd01168"
+                "BITNAMIWP": "ami-010030ff895da60bd"
             },
             "us-west-2": {
-                "BITNAMIWP": "ami-023d6d8efe217ef6a"
+                "BITNAMIWP": "ami-02d28a4ede7032d06"
             }
         }
     },
