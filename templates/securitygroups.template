@@ -53,8 +53,8 @@
                 "SecurityGroupIngress": [
                     {
                         "IpProtocol": "tcp",
-                        "FromPort": "3306",
-                        "ToPort": "3306",
+                        "FromPort": 3306,
+                        "ToPort": 3306,
                         "SourceSecurityGroupId": {
                             "Fn::GetAtt": [
                                 "WebServerSecurityGroup",
@@ -75,28 +75,28 @@
                 "SecurityGroupIngress": [
                     {
                         "IpProtocol": "tcp",
-                        "FromPort": "80",
-                        "ToPort": "80",
+                        "FromPort": 80,
+                        "ToPort": 80,
                         "CidrIp": { "Ref": "ALBAccessCIDR" }
                     },
                     {
                         "IpProtocol": "tcp",
-                        "FromPort": "443",
-                        "ToPort": "443",
+                        "FromPort": 443,
+                        "ToPort": 443,
                         "CidrIp": { "Ref": "ALBAccessCIDR" }
                     }
                 ],
                 "SecurityGroupEgress": [
                     {
                         "IpProtocol": "tcp",
-                        "FromPort": "80",
-                        "ToPort": "80",
+                        "FromPort": 80,
+                        "ToPort": 80,
                         "CidrIp": "0.0.0.0/0"
                     },
                     {
                         "IpProtocol": "tcp",
-                        "FromPort": "443",
-                        "ToPort": "443",
+                        "FromPort": 443,
+                        "ToPort": 443,
                         "CidrIp": "0.0.0.0/0"
                     }
                 ]
@@ -112,16 +112,16 @@
                 "SecurityGroupIngress": [
                     {
                         "IpProtocol": "tcp",
-                        "FromPort": "22",
-                        "ToPort": "22",
+                        "FromPort": 22,
+                        "ToPort": 22,
                         "SourceSecurityGroupId": {
                             "Ref": "BastionSecurityGroupID"
                         }
                     },
                     {
                         "IpProtocol": "tcp",
-                        "FromPort": "443",
-                        "ToPort": "443",
+                        "FromPort": 443,
+                        "ToPort": 443,
                         "SourceSecurityGroupId": {
                             "Fn::GetAtt": [
                                 "ALBSecurityGroup",
@@ -131,8 +131,8 @@
                     },
                     {
                         "IpProtocol": "tcp",
-                        "FromPort": "80",
-                        "ToPort": "80",
+                        "FromPort": 80,
+                        "ToPort": 80,
                         "SourceSecurityGroupId": {
                             "Fn::GetAtt": [
                                 "ALBSecurityGroup",
@@ -144,14 +144,14 @@
                 "SecurityGroupEgress": [
                     {
                         "IpProtocol": "tcp",
-                        "FromPort": "80",
-                        "ToPort": "80",
+                        "FromPort": 80,
+                        "ToPort": 80,
                         "CidrIp": "0.0.0.0/0"
                     },
                     {
                         "IpProtocol": "tcp",
-                        "FromPort": "443",
-                        "ToPort": "443",
+                        "FromPort": 443,
+                        "ToPort": 443,
                         "CidrIp": "0.0.0.0/0"
                     }
                 ]
@@ -167,8 +167,8 @@
                 "SecurityGroupIngress": [
                     {
                         "IpProtocol": "tcp",
-                        "FromPort": "2049",
-                        "ToPort": "2049",
+                        "FromPort": 2049,
+                        "ToPort": 2049,
                         "CidrIp": {
                             "Ref": "VPCCIDR"
                         }
@@ -187,8 +187,8 @@
                 "SecurityGroupIngress": [
                     {
                         "IpProtocol": "tcp",
-                        "FromPort": "11211",
-                        "ToPort": "11211",
+                        "FromPort": 11211,
+                        "ToPort": 11211,
                         "SourceSecurityGroupId": {
                             "Fn::GetAtt": [
                                 "WebServerSecurityGroup",
@@ -204,8 +204,8 @@
             "Condition": "ElastiCacheEnableCondition",
             "Properties": {
                 "IpProtocol": "tcp",
-                "FromPort": "11211",
-                "ToPort": "11211",
+                "FromPort": 11211,
+                "ToPort": 11211,
                 "DestinationSecurityGroupId": {
                     "Fn::GetAtt": [
                         "ElastiCacheSecurityGroup",
@@ -224,8 +224,8 @@
             "Type": "AWS::EC2::SecurityGroupEgress",
             "Properties": {
                 "IpProtocol": "tcp",
-                "FromPort": "3306",
-                "ToPort": "3306",
+                "FromPort": 3306,
+                "ToPort": 3306,
                 "DestinationSecurityGroupId": {
                     "Fn::GetAtt": [
                         "AuroraRDSSecurityGroup",
@@ -244,8 +244,8 @@
             "Type": "AWS::EC2::SecurityGroupEgress",
             "Properties": {
                 "IpProtocol": "tcp",
-                "FromPort": "2049",
-                "ToPort": "2049",
+                "FromPort": 2049,
+                "ToPort": 2049,
                 "DestinationSecurityGroupId": {
                     "Fn::GetAtt": [
                         "EFSSecurityGroup",

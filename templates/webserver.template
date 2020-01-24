@@ -720,7 +720,7 @@
                 "HealthCheckIntervalSeconds": 30,
                 "HealthCheckTimeoutSeconds": 5,
                 "HealthyThresholdCount": 2,
-                "HealthCheckPort": 80,
+                "HealthCheckPort": "80",
                 "HealthCheckProtocol": "HTTP",
                 "Port": 80,
                 "Protocol": "HTTP",
@@ -756,7 +756,7 @@
                                 "RedirectConfig": {
                                     "Host": "#{host}",
                                     "Path": "/#{path}",
-                                    "Port": 443,
+                                    "Port": "443",
                                     "Protocol": "HTTPS",
                                     "StatusCode": "HTTP_301"
                                 }
@@ -870,7 +870,7 @@
                         "Value": {
                             "Fn::Sub": "${AWS::StackName}-Web Server"
                         },
-                        "PropagateAtLaunch": "true"
+                        "PropagateAtLaunch": true
                     }
                 ]
             },
