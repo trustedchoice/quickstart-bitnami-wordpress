@@ -75,7 +75,8 @@
                     },
                     "Parameters": [
                         "QSS3BucketName",
-                        "QSS3KeyPrefix"
+                        "QSS3KeyPrefix",
+                        "QSS3BucketRegion"
                     ]
                 }
             ],
@@ -175,6 +176,9 @@
                 },
                 "ElastiCacheNumberOfNodes":{
                     "default": "Number of ElastiCache Nodes"
+                },
+                "QSS3BucketRegion":{
+                    "default":"Quick Start S3 bucket region"
                 }
             }
         }
@@ -323,6 +327,11 @@
             "Default": "quickstart-bitnami-wordpress/",
             "Description": "Alphanumeric string which identifies the S3 key prefix used to simulate a folder for your copy of the Quick Start assets if you decided to customize or extend them for your own use.",
             "Type": "String"
+        },
+        "QSS3BucketRegion":{
+          "Default":"us-east-1",
+          "Description":"The AWS Region where the Quick Start S3 bucket (QSS3BucketName) is hosted. When using your own bucket, you must specify this value.",
+          "Type":"String"
         },
         "DomainName": {
             "Description": "(Optional) Domain name for the web site. It must be an existing, publicly resolvable domain.",
@@ -693,6 +702,7 @@
         }
     },
     "Conditions": {
+        "UsingDefaultBucket":{"Fn::Equals":[{"Ref": "QSS3BucketName"}, "aws-quickstart"]},
         "AddDNSRecord": {
             "Fn::And": [
                 { "Fn::Not": [ { "Fn::Equals": [ { "Ref": "DomainName" }, "" ] } ] },
@@ -713,7 +723,10 @@
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
                 "TemplateURL": {
-                    "Fn::Sub": "https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}templates/securitygroups.template"
+                    "Fn::Sub": ["https://${BucketName}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/securitygroups.template",
+                      {
+                        "BucketName":{"Fn::If":["UsingDefaultBucket", {"Fn::Sub":"aws-quickstart-${AWS::Region}"}, {"Ref":"QSS3BucketName"}]}
+                        "S3Region":{"Fn::If":["UsingDefaultBucket", {"Ref":"AWS::Region"}, {"Ref":"QSS3BucketRegion"}]}}]
                 },
                 "Parameters": {
                     "VPC": {
@@ -735,7 +748,10 @@
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
                 "TemplateURL": {
-                    "Fn::Sub": "https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}templates/rdsaurora.template"
+                    "Fn::Sub": ["https://${BucketName}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/rdsaurora.template",
+                      {
+                        "BucketName":{"Fn::If":["UsingDefaultBucket", {"Fn::Sub":"aws-quickstart-${AWS::Region}"}, {"Ref":"QSS3BucketName"}]}
+                        "S3Region":{"Fn::If":["UsingDefaultBucket", {"Ref":"AWS::Region"}, {"Ref":"QSS3BucketRegion"}]}}]
                 },
                 "Parameters": {
                     "Subnets": {
@@ -783,7 +799,10 @@
             "Condition": "ElastiCacheEnableCondition",
             "Properties": {
                 "TemplateURL": {
-                    "Fn::Sub": "https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}templates/elasticache.template"
+                    "Fn::Sub": ["https://${BucketName}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/elasticache.template",
+                      {
+                        "BucketName":{"Fn::If":["UsingDefaultBucket", {"Fn::Sub":"aws-quickstart-${AWS::Region}"}, {"Ref":"QSS3BucketName"}]}
+                        "S3Region":{"Fn::If":["UsingDefaultBucket", {"Ref":"AWS::Region"}, {"Ref":"QSS3BucketRegion"}]}}]
                 },
                 "Parameters":{
                     "Subnets": {
@@ -821,7 +840,10 @@
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
                 "TemplateURL": {
-                    "Fn::Sub": "https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}templates/webserver.template"
+                    "Fn::Sub": ["https://${BucketName}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/webserver.template",
+                      {
+                        "BucketName":{"Fn::If":["UsingDefaultBucket", {"Fn::Sub":"aws-quickstart-${AWS::Region}"}, {"Ref":"QSS3BucketName"}]}
+                        "S3Region":{"Fn::If":["UsingDefaultBucket", {"Ref":"AWS::Region"}, {"Ref":"QSS3BucketRegion"}]}}]
                 },
                 "Parameters": {
                     "QSS3BucketName": {
