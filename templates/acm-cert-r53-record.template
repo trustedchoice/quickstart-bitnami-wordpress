@@ -136,7 +136,7 @@
                     ]
                 },
                 "ManagedPolicyArns": [
-                    "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                      {"Fn::Sub":"arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"}
                 ],
                 "Path": "/",
                 "Policies": [
@@ -172,7 +172,7 @@
                                     ],
                                     "Resource": [
                                         {
-                                          "Fn::Sub": "arn:aws:route53:::hostedzone/${HostedZoneID}"
+                                          "Fn::Sub": "arn:${AWS::Partition}:route53:::hostedzone/${HostedZoneID}"
                                         }
                                     ]
                                 },
