@@ -411,7 +411,6 @@
             "Description": "(Optional) Domain name for the web site. It must be an existing, publicly resolvable domain.",
             "Type": "String",
             "Default": "",
-            "AllowedPattern": "^((\\w+\\.)+\\w+){0,1}$",
             "ConstraintDescription": "Must be a valid domain name."
         },
         "UseSSL": {
@@ -831,7 +830,7 @@
                 "TemplateURL": {
                     "Fn::Sub": ["https://${BucketName}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template",
                       {
-                        "BucketName":{"Fn::If":["UsingDefaultBucket", {"Fn::Sub":"aws-quickstart-${AWS::Region}"}, {"Ref":"QSS3BucketName"}]}
+                        "BucketName":{"Fn::If":["UsingDefaultBucket", {"Fn::Sub":"aws-quickstart-${AWS::Region}"}, {"Ref":"QSS3BucketName"}]},
                         "S3Region":{"Fn::If":["UsingDefaultBucket", {"Ref":"AWS::Region"}, {"Ref":"QSS3BucketRegion"}]}}]
                 },
                 "Parameters": {
@@ -872,7 +871,7 @@
                 "TemplateURL": {
                     "Fn::Sub": ["https://${BucketName}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/templates/linux-bastion.template",
                       {
-                        "BucketName":{"Fn::If":["UsingDefaultBucket", {"Fn::Sub":"aws-quickstart-${AWS::Region}"}, {"Ref":"QSS3BucketName"}]}
+                        "BucketName":{"Fn::If":["UsingDefaultBucket", {"Fn::Sub":"aws-quickstart-${AWS::Region}"}, {"Ref":"QSS3BucketName"}]},
                         "S3Region":{"Fn::If":["UsingDefaultBucket", {"Ref":"AWS::Region"}, {"Ref":"QSS3BucketRegion"}]}}]
                 },
                 "Parameters": {
@@ -906,6 +905,7 @@
                     "RemoteAccessCIDR": {
                         "Ref": "RemoteAccessCIDR"
                     },
+                    "QSS3BucketRegion":{ "Ref": "QSS3BucketRegion"},
                     "VPCID": {
                         "Fn::GetAtt": [
                             "VPCStack",
@@ -917,13 +917,13 @@
         },
         "CopyLambdaStack": {
             "DependsOn":"VPCStack",
-            "Condition": "GenerateSSLCertificate",
+        "Condition": "GenerateSSLCertificate",
             "Type":"AWS::CloudFormation::Stack",
             "Properties":{
                 "TemplateURL":{
                     "Fn::Sub": ["https://${BucketName}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/copy-lambdas.template",
                       {
-                        "BucketName":{"Fn::If":["UsingDefaultBucket", {"Fn::Sub":"aws-quickstart-${AWS::Region}"}, {"Ref":"QSS3BucketName"}]}
+                        "BucketName":{"Fn::If":["UsingDefaultBucket", {"Fn::Sub":"aws-quickstart-${AWS::Region}"}, {"Ref":"QSS3BucketName"}]},
                         "S3Region":{"Fn::If":["UsingDefaultBucket", {"Ref":"AWS::Region"}, {"Ref":"QSS3BucketRegion"}]}}]
                 },
                 "Parameters":{
@@ -943,7 +943,7 @@
                 "TemplateURL":{
                     "Fn::Sub": ["https://${BucketName}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/acm-cert-r53-record.template",
                       {
-                        "BucketName":{"Fn::If":["UsingDefaultBucket", {"Fn::Sub":"aws-quickstart-${AWS::Region}"}, {"Ref":"QSS3BucketName"}]}
+                        "BucketName":{"Fn::If":["UsingDefaultBucket", {"Fn::Sub":"aws-quickstart-${AWS::Region}"}, {"Ref":"QSS3BucketName"}]},
                         "S3Region":{"Fn::If":["UsingDefaultBucket", {"Ref":"AWS::Region"}, {"Ref":"QSS3BucketRegion"}]}}]
                 },
                 "Parameters":{
@@ -969,12 +969,13 @@
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
                 "TemplateURL": {
-                    "Fn::Sub": ["https://${BucketName}.s3.${S3Region}/${AWS::URLSuffix}/${QSS3KeyPrefix}templates/wordpress.template",
+                    "Fn::Sub": ["https://${BucketName}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/wordpress.template",
                       {
-                        "BucketName":{"Fn::If":["UsingDefaultBucket", {"Fn::Sub":"aws-quickstart-${AWS::Region}"}, {"Ref":"QSS3BucketName"}]}
+                        "BucketName":{"Fn::If":["UsingDefaultBucket", {"Fn::Sub":"aws-quickstart-${AWS::Region}"}, {"Ref":"QSS3BucketName"}]},
                         "S3Region":{"Fn::If":["UsingDefaultBucket", {"Ref":"AWS::Region"}, {"Ref":"QSS3BucketRegion"}]}}]
                 },
                 "Parameters": {
+                    "QSS3BucketRegion":{ "Ref": "QSS3BucketRegion"},
                     "VPCID": {
                         "Fn::GetAtt": [
                             "VPCStack",
