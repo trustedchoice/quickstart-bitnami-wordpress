@@ -35,6 +35,15 @@
             "Description": "(Optional) Preferred backup window",
             "Type": "String"
         },
+        "DBStorageEncrypted": {
+            "AllowedValues": [
+                "true",
+                "false"
+            ],
+            "Default": "false",
+            "Description": "Select true/false to enable storage encryption in the database instances",
+            "Type": "String"
+        },
         "DBInstanceClass": {
             "AllowedValues": [
                 "db.t2.micro",
@@ -111,6 +120,14 @@
                 },
                 "true"
             ]
+        },
+        "EnableStorageEncryption": {
+            "Fn::Equals": [
+                {
+                    "Ref": "DBStorageEncrypted"
+                },
+                "true"
+            ]
         }
     },
     "Resources": {
@@ -126,6 +143,15 @@
         "AuroraDBCluster": {
             "Type": "AWS::RDS::DBCluster",
             "Properties": {
+                "StorageEncrypted": {
+                    "Fn::If": [
+                        "EnableStorageEncryption",
+                        "true",
+                        {
+                            "Ref": "AWS::NoValue"
+                        }
+                    ]
+                },
                 "BackupRetentionPeriod": {
                     "Ref": "DBBackupRetentionPeriod"
                 },
