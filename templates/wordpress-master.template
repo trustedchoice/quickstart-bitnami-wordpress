@@ -37,6 +37,7 @@
                         "DBAutoMinorVersionUpgrade",
                         "DBBackupRetentionPeriod",
                         "DBPreferredBackupWindow",
+                        "DBStorageEncrypted",
                         "DBInstanceClass",
                         "DBMasterUserPassword",
                         "DBMultiAZ"
@@ -111,6 +112,9 @@
                 },
                 "DBPreferredBackupWindow": {
                     "default": "Preferred Backup Window"
+                },
+                "DBStorageEncrypted": {
+                    "default": "Enable Storage Encryption"
                 },
                 "DBInstanceClass": {
                     "default": "Database Instance Size"
@@ -271,6 +275,15 @@
             "ConstraintDescription": "Preferred backup window must be left blank or in the form of HH:MM-HH:MM",
             "Default": "",
             "Description": "(Optional) Preferred Backup Window, specified in the format HH:MM-HH:MM using UTC. Automated backups will occur within this time frame. When it's not set, the backup will take place during the default Backup Windows of the AWS region.",
+            "Type": "String"
+        },
+        "DBStorageEncrypted": {
+            "AllowedValues": [
+                "true",
+                "false"
+            ],
+            "Default": "false",
+            "Description": "Select true/false to enable storage encryption in the database instances.",
             "Type": "String"
         },
         "DBInstanceClass": {
@@ -1032,6 +1045,9 @@
                     },
                     "DBPreferredBackupWindow": {
                         "Ref": "DBPreferredBackupWindow"
+                    },
+                    "DBStorageEncrypted": {
+                        "Ref": "DBStorageEncrypted"
                     },
                     "WebServerInstanceType": {
                         "Ref": "WebServerInstanceType"
