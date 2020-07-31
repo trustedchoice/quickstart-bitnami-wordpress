@@ -20,7 +20,6 @@ project:
     ALBAccessCIDR: 10.0.0.0/16
     AutoScalingNotificationEmail: foo@example.com
     AvailabilityZones: $[taskcat_genaz_2]
-    BastionAMIOS: Amazon-Linux-HVM
     BastionInstanceType: t2.micro
     DBAutoMinorVersionUpgrade: 'true'
     DBBackupRetentionPeriod: '7'
