@@ -17,7 +17,7 @@
     },
     {
         "ParameterKey": "BastionInstanceType",
-        "ParameterValue": "t2.micro"
+        "ParameterValue": "t3.micro"
     },
     {
         "ParameterKey": "DBAutoMinorVersionUpgrade",
@@ -29,7 +29,7 @@
     },
     {
         "ParameterKey": "DBInstanceClass",
-        "ParameterValue": "db.t2.small"
+        "ParameterValue": "db.t3.medium"
     },
     {
         "ParameterKey": "DBMasterUserPassword",
@@ -61,7 +61,7 @@
     },
     {
         "ParameterKey": "WebServerInstanceType",
-        "ParameterValue": "t2.small"
+        "ParameterValue": "t3.small"
     },
     {
         "ParameterKey": "WebServerMaxSize",

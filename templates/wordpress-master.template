@@ -248,7 +248,7 @@
                 "m4.2xlarge",
                 "m4.4xlarge"
             ],
-            "Default": "t2.micro",
+            "Default": "t3.micro",
             "Description": "Amazon EC2 instance type for the Bastion instances. Bastion hosts are machines placed in the public subnets of each of the Availability Zone which provide secure access to the instances located in the private subnet.",
             "Type": "String"
         },
@@ -687,7 +687,7 @@
                 "z1d.metal"
             ],
             "ConstraintDescription": "Choose an instance type.",
-            "Default": "t2.small",
+            "Default": "t3.small",
             "Description": "Select Amazon EC2 instance type for the WordPress instances.",
             "Type": "String"
         },
@@ -827,6 +827,7 @@
                     "Assert": {
                         "Fn::Contains": [
                             [
+                                "af-south-1",
                                 "ap-northeast-1",
                                 "ap-northeast-2",
                                 "ap-south-1",

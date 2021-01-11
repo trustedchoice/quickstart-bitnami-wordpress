@@ -88,7 +88,7 @@
             "Type": "AWS::ElastiCache::CacheCluster",
             "Properties":{
                 "Engine": "memcached",
-                "EngineVersion": "1.4.34",
+                "EngineVersion": "1.6.6",
                 "CacheNodeType":{
                     "Ref": "NodeType"
                 },
