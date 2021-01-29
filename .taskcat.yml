@@ -3,6 +3,7 @@ project:
   owner: abjimenez@bitnami.com
   package_lambda: false
   regions:
+    - af-south-1
     - ap-northeast-1
     - ap-south-1
     - ap-southeast-1
@@ -20,7 +21,7 @@ project:
     ALBAccessCIDR: 10.0.0.0/16
     AutoScalingNotificationEmail: foo@example.com
     AvailabilityZones: $[taskcat_genaz_2]
-    BastionInstanceType: t2.micro
+    BastionInstanceType: t3.micro
     DBAutoMinorVersionUpgrade: 'true'
     DBBackupRetentionPeriod: '7'
     DBInstanceClass: db.t2.small
@@ -34,7 +35,7 @@ project:
     VPCCIDR: 10.0.0.0/16
     WebServerDesiredCapacity: '2'
     WebServerInstanceMonitoring: Enabled
-    WebServerInstanceType: t2.small
+    WebServerInstanceType: t3.small
     WebServerMaxSize: '3'
     WebServerMinSize: '2'
     WordpressAdminPassword: $[taskcat_genpass_16A]
