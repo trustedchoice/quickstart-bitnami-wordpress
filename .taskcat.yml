@@ -24,7 +24,7 @@ project:
     BastionInstanceType: t3.micro
     DBAutoMinorVersionUpgrade: 'true'
     DBBackupRetentionPeriod: '7'
-    DBInstanceClass: db.t2.small
+    DBInstanceClass: db.t3.small
     DBMasterUserPassword: $[taskcat_genpass_16A]
     DBMultiAZ: 'true'
     DBPreferredBackupWindow: ''
