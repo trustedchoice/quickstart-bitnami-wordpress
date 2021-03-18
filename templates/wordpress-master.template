@@ -969,43 +969,22 @@
                 }
             }
         },
-        "CopyLambdaStack": {
-            "DependsOn":"VPCStack",
-        "Condition": "GenerateSSLCertificate",
-            "Type":"AWS::CloudFormation::Stack",
-            "Properties":{
-                "TemplateURL":{
-                    "Fn::Sub": ["https://${BucketName}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/copy-lambdas.template",
-                      {
-                        "BucketName":{"Fn::If":["UsingDefaultBucket", {"Fn::Sub":"aws-quickstart-${AWS::Region}"}, {"Ref":"QSS3BucketName"}]},
-                        "S3Region":{"Fn::If":["UsingDefaultBucket", {"Ref":"AWS::Region"}, {"Ref":"QSS3BucketRegion"}]}}]
-                },
-                "Parameters":{
-                    "QSS3BucketName": {
-                        "Ref": "QSS3BucketName"
-                    },
-                    "QSS3KeyPrefix": {
-                        "Ref": "QSS3KeyPrefix"
-                    }
-                }
-            }
-        },
         "ConfigureSSLStack": {
             "Condition":"GenerateSSLCertificate",
             "Type":"AWS::CloudFormation::Stack",
             "Properties":{
                 "TemplateURL":{
-                    "Fn::Sub": ["https://${BucketName}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/acm-cert-r53-record.template",
+                    "Fn::Sub": ["https://${BucketName}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-aws-acm-certificate/quickstart-aws-acm-certificate.template.yaml",
                       {
                         "BucketName":{"Fn::If":["UsingDefaultBucket", {"Fn::Sub":"aws-quickstart-${AWS::Region}"}, {"Ref":"QSS3BucketName"}]},
                         "S3Region":{"Fn::If":["UsingDefaultBucket", {"Ref":"AWS::Region"}, {"Ref":"QSS3BucketRegion"}]}}]
                 },
                 "Parameters":{
-                  "LambdaZipsBucketName": {
-                    "Fn::GetAtt": [
-                      "CopyLambdaStack",
-                      "Outputs.LambdaZipsBucket"
-                    ]
+                  "QSS3BucketName":{
+                    "Ref": "QSS3BucketName"
+                  },
+                  "QSS3BucketRegion":{
+                    "Ref":"QSS3BucketRegion"
                   },
                   "QSS3KeyPrefix": {
                     "Ref": "QSS3KeyPrefix"

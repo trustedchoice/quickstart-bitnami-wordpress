@@ -136,7 +136,7 @@
                 "StorageEncrypted": {
                     "Fn::If": [
                         "EnableStorageEncryption",
-                        "true",
+                        true,
                         {
                             "Ref": "AWS::NoValue"
                         }
