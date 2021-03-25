@@ -152,7 +152,7 @@
                     "Ref": "AuroraDBSubnetGroup"
                 },
                 "Engine": "aurora",
-                "EngineVersion": "5.6",
+                "EngineVersion": "5.7",
                 "MasterUsername": "root",
                 "MasterUserPassword": {
                     "Ref": "DBMasterUserPassword"
@@ -174,7 +174,7 @@
             "Type": "AWS::RDS::DBInstance",
             "Properties": {
                 "Engine": "aurora",
-                "EngineVersion": "5.6",
+                "EngineVersion": "5.7",
                 "DBClusterIdentifier": {
                     "Ref": "AuroraDBCluster"
                 },
@@ -200,7 +200,7 @@
             "Condition": "CreateReadReplica",
             "Properties": {
                 "Engine": "aurora",
-                "EngineVersion": "5.6",
+                "EngineVersion": "5.7",
                 "DBClusterIdentifier": {
                     "Ref": "AuroraDBCluster"
                 },
