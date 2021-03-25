@@ -151,7 +151,7 @@
                 "DBSubnetGroupName": {
                     "Ref": "AuroraDBSubnetGroup"
                 },
-                "Engine": "aurora",
+                "Engine": "aurora-mysql",
                 "EngineVersion": "5.7",
                 "MasterUsername": "root",
                 "MasterUserPassword": {
@@ -173,7 +173,7 @@
         "AuroraDBPrimaryInstance": {
             "Type": "AWS::RDS::DBInstance",
             "Properties": {
-                "Engine": "aurora",
+                "Engine": "aurora-mysql",
                 "EngineVersion": "5.7",
                 "DBClusterIdentifier": {
                     "Ref": "AuroraDBCluster"
@@ -199,7 +199,7 @@
             "Type": "AWS::RDS::DBInstance",
             "Condition": "CreateReadReplica",
             "Properties": {
-                "Engine": "aurora",
+                "Engine": "aurora-mysql",
                 "EngineVersion": "5.7",
                 "DBClusterIdentifier": {
                     "Ref": "AuroraDBCluster"
