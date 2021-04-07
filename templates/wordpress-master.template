@@ -886,7 +886,7 @@
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
                 "TemplateURL": {
-                    "Fn::Sub": ["https://${BucketName}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template",
+                    "Fn::Sub": ["https://${BucketName}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template.yaml",
                       {
                         "BucketName":{"Fn::If":["UsingDefaultBucket", {"Fn::Sub":"aws-quickstart-${AWS::Region}"}, {"Ref":"QSS3BucketName"}]},
                         "S3Region":{"Fn::If":["UsingDefaultBucket", {"Ref":"AWS::Region"}, {"Ref":"QSS3BucketRegion"}]}}]
@@ -899,9 +899,6 @@
                                 "Ref": "AvailabilityZones"
                             }
                         ]
-                    },
-                    "KeyPairName": {
-                        "Ref": "KeyPairName"
                     },
                     "NumberOfAZs": "2",
                     "PrivateSubnet1ACIDR": {
