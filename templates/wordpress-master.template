@@ -516,6 +516,7 @@
                 "m5d.16xlarge",
                 "m5d.24xlarge",
                 "m5d.metal",
+                "m5dn.metal",
                 "m5dn.large",
                 "m5dn.xlarge",
                 "m5dn.2xlarge",
@@ -524,6 +525,7 @@
                 "m5dn.12xlarge",
                 "m5dn.16xlarge",
                 "m5dn.24xlarge",
+                "m5n.metal",
                 "m5n.large",
                 "m5n.xlarge",
                 "m5n.2xlarge",
@@ -644,6 +646,7 @@
                 "r5d.16xlarge",
                 "r5d.24xlarge",
                 "r5d.metal",
+                "r5dn.metal",
                 "r5dn.large",
                 "r5dn.xlarge",
                 "r5dn.2xlarge",
@@ -652,6 +655,7 @@
                 "r5dn.12xlarge",
                 "r5dn.16xlarge",
                 "r5dn.24xlarge",
+                "r5n.metal",
                 "r5n.large",
                 "r5n.xlarge",
                 "r5n.2xlarge",
@@ -670,6 +674,10 @@
                 "i3.4xlarge",
                 "i3.8xlarge",
                 "i3.16xlarge",
+                "u-6tb1.56xlarge",
+                "u-6tb1.112xlarge",
+                "u-9tb1.112xlarge",
+                "u-12tb1.112xlarge",
                 "x1.16xlarge",
                 "x1.32xlarge",
                 "x1e.xlarge",
@@ -882,7 +890,7 @@
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
                 "TemplateURL": {
-                    "Fn::Sub": ["https://${BucketName}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template",
+                    "Fn::Sub": ["https://${BucketName}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template.yaml",
                       {
                         "BucketName":{"Fn::If":["UsingDefaultBucket", {"Fn::Sub":"aws-quickstart-${AWS::Region}"}, {"Ref":"QSS3BucketName"}]},
                         "S3Region":{"Fn::If":["UsingDefaultBucket", {"Ref":"AWS::Region"}, {"Ref":"QSS3BucketRegion"}]}}]
@@ -895,9 +903,6 @@
                                 "Ref": "AvailabilityZones"
                             }
                         ]
-                    },
-                    "KeyPairName": {
-                        "Ref": "KeyPairName"
                     },
                     "NumberOfAZs": "2",
                     "PrivateSubnet1ACIDR": {
