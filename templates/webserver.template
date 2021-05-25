@@ -722,8 +722,25 @@
                     "Statement": [
                         {
                             "Action": [
-                                "elasticache:Describe*",
-                                "elasticache:List*"
+                                    "elasticache:DescribeCacheClusters",
+                                    "elasticache:DescribeCacheEngineVersions",
+                                    "elasticache:DescribeCacheParameterGroups",
+                                    "elasticache:DescribeCacheParameters",
+                                    "elasticache:DescribeCacheSecurityGroups",
+                                    "elasticache:DescribeCacheSubnetGroups",
+                                    "elasticache:DescribeEngineDefaultParameters",
+                                    "elasticache:DescribeEvents",
+                                    "elasticache:DescribeGlobalReplicationGroups",
+                                    "elasticache:DescribeReplicationGroups",
+                                    "elasticache:DescribeReservedCacheNodes",
+                                    "elasticache:DescribeReservedCacheNodesOfferings",
+                                    "elasticache:DescribeServiceUpdates",
+                                    "elasticache:DescribeSnapshots",
+                                    "elasticache:DescribeUpdateActions",
+                                    "elasticache:DescribeUserGroups",
+                                    "elasticache:DescribeUsers",
+                                    "elasticache:ListAllowedNodeTypeModifications",
+                                    "elasticache:ListTagsForResource"
                             ],
                             "Effect": "Allow",
                             "Resource": "*"
