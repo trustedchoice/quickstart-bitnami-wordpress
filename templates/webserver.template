@@ -480,53 +480,53 @@
         }
     },
     "Mappings": {
-        "AWSAMIRegionMap": {
-            "af-south-1": {
-                "BITNAMIWP": "ami-018dfc22ff1eb3d88"
-            },
-            "ap-northeast-1": {
-                "BITNAMIWP": "ami-06408bdb771dc143b"
-            },
-            "ap-northeast-2": {
-                "BITNAMIWP": "ami-048da5e1d09c2d635"
-            },
-            "ap-south-1": {
-                "BITNAMIWP": "ami-0dd778181f3883554"
-            },
-            "ap-southeast-1": {
-                "BITNAMIWP": "ami-0ea1bd5045db7b768"
-            },
-            "ap-southeast-2": {
-                "BITNAMIWP": "ami-0d985970e576a0d1c"
-            },
-            "ca-central-1": {
-                "BITNAMIWP": "ami-043dbe8cb21b869c2"
-            },
-            "eu-central-1": {
-                "BITNAMIWP": "ami-0b19978e14a8bf573"
-            },
-            "eu-west-1": {
-                "BITNAMIWP": "ami-0aea38cc9a70171a9"
-            },
-            "eu-west-2": {
-                "BITNAMIWP": "ami-017e333321c9cf6c2"
-            },
-            "eu-west-3": {
-                "BITNAMIWP": "ami-0c53b50c9b335aea7"
-            },
-            "us-east-1": {
-                "BITNAMIWP": "ami-0860a09be6c870294"
-            },
-            "us-east-2": {
-                "BITNAMIWP": "ami-0c6aafd2e5665ff23"
-            },
-            "us-west-1": {
-                "BITNAMIWP": "ami-08eed1ce64b94840c"
-            },
-            "us-west-2": {
-                "BITNAMIWP": "ami-0a253a5cbbce27b00"
-            }
+      "AWSAMIRegionMap": {
+        "us-east-1": {
+          "BITNAMIWP": "ami-08b69eee1d837ede1"
+        },
+        "us-east-2": {
+          "BITNAMIWP": "ami-07c7c5e9723289d02"
+        },
+        "us-west-1": {
+          "BITNAMIWP": "ami-06ab0c029bba2fbd6"
+        },
+        "us-west-2": {
+          "BITNAMIWP": "ami-07d3457b1227338c8"
+        },
+        "ca-central-1": {
+          "BITNAMIWP": "ami-0fdb3b448288306dc"
+        },
+        "eu-central-1": {
+          "BITNAMIWP": "ami-0a9c8994e4ce9cae6"
+        },
+        "eu-west-1": {
+          "BITNAMIWP": "ami-0482a8411cd292caa"
+        },
+        "eu-west-2": {
+          "BITNAMIWP": "ami-0ae14d961e4bbdb9e"
+        },
+        "eu-west-3": {
+          "BITNAMIWP": "ami-05b70417b7dac8d77"
+        },
+        "af-south-1": {
+          "BITNAMIWP": "ami-075bc17d4df5f1a6c"
+        },
+        "ap-southeast-1": {
+          "BITNAMIWP": "ami-0da56061efe03c0a2"
+        },
+        "ap-southeast-2": {
+          "BITNAMIWP": "ami-0b87ff2454fee8376"
+        },
+        "ap-south-1": {
+          "BITNAMIWP": "ami-01af2bfbc44bd8c83"
+        },
+        "ap-northeast-1": {
+          "BITNAMIWP": "ami-091a0074a196883df"
+        },
+        "ap-northeast-2": {
+          "BITNAMIWP": "ami-0b243695042d5255e"
         }
+      }
     },
     "Rules": {
         "ElastiCacheRule": {
