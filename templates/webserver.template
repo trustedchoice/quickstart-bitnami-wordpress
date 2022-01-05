@@ -522,49 +522,49 @@
     "Mappings": {
         "AWSAMIRegionMap": {
             "us-east-1": {
-                "BITNAMIWP": "ami-063d6c0e8ef873625"
+                "BITNAMIWP": "ami-03142c98d97b4b54d"
             },
             "us-east-2": {
-                "BITNAMIWP": "ami-0d878dcb574df5dda"
+                "BITNAMIWP": "ami-017724bd23a968bea"
             },
             "us-west-1": {
-                "BITNAMIWP": "ami-0019c76605f6926d2"
+                "BITNAMIWP": "ami-0119e9a0256303d10"
             },
             "us-west-2": {
-                "BITNAMIWP": "ami-041c93d96ad714756"
+                "BITNAMIWP": "ami-07671bb5550340b68"
             },
             "ca-central-1": {
-                "BITNAMIWP": "ami-01a67b1a2e1ba42fa"
+                "BITNAMIWP": "ami-03c956663ba3276f6"
             },
             "eu-central-1": {
-                "BITNAMIWP": "ami-0ce5543af9af6381d"
+                "BITNAMIWP": "ami-0a852649f0a8bdd23"
             },
             "eu-west-1": {
-                "BITNAMIWP": "ami-0d8ea872c065a7ab9"
+                "BITNAMIWP": "ami-0c57ca870eaee09fe"
             },
             "eu-west-2": {
-                "BITNAMIWP": "ami-028117f3ea03acb6e"
+                "BITNAMIWP": "ami-0d6fc7b052067e076"
             },
             "eu-west-3": {
-                "BITNAMIWP": "ami-0cc98fb092f488a7d"
+                "BITNAMIWP": "ami-03d3c4fd3f28404b8"
             },
             "af-south-1": {
-                "BITNAMIWP": "ami-0ad88083c4f8e857f"
+                "BITNAMIWP": "ami-0d0004e2d10a93f10"
             },
             "ap-southeast-1": {
-                "BITNAMIWP": "ami-0edc1bfdc779f2244"
+                "BITNAMIWP": "ami-07ade4270449482d3"
             },
             "ap-southeast-2": {
-                "BITNAMIWP": "ami-032f611d50c8bb0ad"
+                "BITNAMIWP": "ami-0eeeb24fd1bb42e0f"
             },
             "ap-south-1": {
-                "BITNAMIWP": "ami-089cd387b0f5312f4"
+                "BITNAMIWP": "ami-000ec13f5a87f06cb"
             },
             "ap-northeast-1": {
-                "BITNAMIWP": "ami-0f58567a4a4b2b454"
+                "BITNAMIWP": "ami-00a78ffab67e98ef5"
             },
             "ap-northeast-2": {
-                "BITNAMIWP": "ami-015d03fefe8a9dca7"
+                "BITNAMIWP": "ami-0125014ef30592fb9"
             }
         }
     },
