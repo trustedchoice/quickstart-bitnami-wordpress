@@ -552,7 +552,7 @@
                 "m6a.16xlarge",
                 "m6a.24xlarge",
                 "m6a.32xlarge",
-                "m6a.48xlarge"
+                "m6a.48xlarge",
                 "m6i.large",
                 "m6i.xlarge",
                 "m6i.metal",
