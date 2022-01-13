@@ -1,6 +1,14 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
     "Description": "WordPress RDS Aurora-MySQL Template. (qs-1ot302h6n)",
+    "Metadata": {
+        "cfn-lint": {
+          "config": {
+            "ignore_checks": [ "E9101"],
+            "ignore_reasons": ["Unable to rename parameters"]
+          }
+        }
+    },
     "Parameters": {
         "Subnets": {
             "ConstraintDescription": "Must be list of existing subnet Ids",
@@ -133,15 +141,7 @@
         "AuroraDBCluster": {
             "Type": "AWS::RDS::DBCluster",
             "Properties": {
-                "StorageEncrypted": {
-                    "Fn::If": [
-                        "EnableStorageEncryption",
-                        true,
-                        {
-                            "Ref": "AWS::NoValue"
-                        }
-                    ]
-                },
+              "StorageEncrypted": true,
                 "BackupRetentionPeriod": {
                     "Ref": "DBBackupRetentionPeriod"
                 },
@@ -173,6 +173,7 @@
         "AuroraDBPrimaryInstance": {
             "Type": "AWS::RDS::DBInstance",
             "Properties": {
+                "PubliclyAccessible": false,
                 "Engine": "aurora-mysql",
                 "EngineVersion": "5.7",
                 "DBClusterIdentifier": {
@@ -199,6 +200,7 @@
             "Type": "AWS::RDS::DBInstance",
             "Condition": "CreateReadReplica",
             "Properties": {
+                "PubliclyAccessible": false,
                 "Engine": "aurora-mysql",
                 "EngineVersion": "5.7",
                 "DBClusterIdentifier": {

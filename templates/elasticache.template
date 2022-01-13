@@ -87,6 +87,9 @@
         "ElastiCacheCluster":{
             "Type": "AWS::ElastiCache::CacheCluster",
             "Properties":{
+                "AutoMinorVersionUpgrade": {
+                  "Ref":"AutoMinorVersionUpgrade"
+                },
                 "Engine": "memcached",
                 "EngineVersion": "1.6.6",
                 "CacheNodeType":{
