@@ -2,6 +2,12 @@
     "AWSTemplateFormatVersion": "2010-09-09",
     "Description": "WordPress Webserver Template. (qs-1ot302h72)",
     "Metadata": {
+      "cfn-lint": {
+        "config": {
+          "ignore_checks": [ "E9101"],
+          "ignore_reasons": ["Unable to rename parameters"]
+        }
+      },
         "AWSAMIRegionMap": {
             "Filters": {
                 "BITNAMIWP": {
@@ -68,34 +74,11 @@
                         "WebServerDesiredCapacity",
                         "KeyPairName"
                     ]
-                },
-                {
-                    "Label": {
-                        "default": "AWS Quick Start Configuration"
-                    },
-                    "Parameters": [
-                        "QSS3BucketName",
-                        "QSS3KeyPrefix"
-                    ]
                 }
             ]
         }
     },
     "Parameters": {
-        "QSS3BucketName": {
-            "AllowedPattern": "^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$",
-            "ConstraintDescription": "S3 bucket name can include numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen (-).",
-            "Default": "aws-quickstart",
-            "Description": "Alphanumeric string which identifies the S3 bucket name for the Quick Start assets. It's the bucket to store the copy of the Quick Start assets if you decided to customize or extend them for your own use.",
-            "Type": "String"
-        },
-        "QSS3KeyPrefix": {
-            "AllowedPattern": "^[0-9a-zA-Z-/._]*$",
-            "ConstraintDescription": "S3 key prefix can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slash (/).",
-            "Description": "Alphanumeric string which identifies the S3 key prefix used to simulate a folder for your copy of the Quick Start assets if you decided to customize or extend them for your own use.",
-            "Default": "quickstart-bitnami-wordpress/",
-            "Type": "String"
-        },
         "AutoScalingNotificationEmail": {
             "AllowedPattern": "([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)",
             "ConstraintDescription": "Must be a valid email address.",
@@ -753,6 +736,14 @@
             }
         },
         "DescribeElastiCachePolicy": {
+            "Metadata":{
+              "cfn-lint":{
+                "config":{
+                  "ignore_checks":["EIAMPolicyWildcardResource"],
+                  "ignore_reasons":"read only policy"
+                }
+              }
+            },
             "Type": "AWS::IAM::Policy",
             "Condition": "ElastiCacheEnableCondition",
             "Properties": {

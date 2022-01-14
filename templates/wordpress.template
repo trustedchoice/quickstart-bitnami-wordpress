@@ -2,6 +2,12 @@
     "AWSTemplateFormatVersion": "2010-09-09",
     "Description": "This template deploys WordPress into an existing VPC. **WARNING** This template creates EC2 instances and related resources. You will be billed for the AWS resources used if you create a stack from this template. (qs-1ot302h7c)",
     "Metadata": {
+      "cfn-lint": {
+        "config": {
+          "ignore_checks": [ "E9101"],
+          "ignore_reasons": ["Unable to rename parameters"]
+        }
+      },
         "AWS::CloudFormation::Interface": {
             "ParameterGroups": [
                 {
@@ -951,12 +957,6 @@
                         "S3Region":{"Fn::If":["UsingDefaultBucket", {"Ref":"AWS::Region"}, {"Ref":"QSS3BucketRegion"}]}}]
                 },
                 "Parameters": {
-                    "QSS3BucketName": {
-                        "Ref": "QSS3BucketName"
-                    },
-                    "QSS3KeyPrefix": {
-                        "Ref": "QSS3KeyPrefix"
-                    },
                     "AutoScalingNotificationEmail": {
                         "Ref": "AutoScalingNotificationEmail"
                     },
