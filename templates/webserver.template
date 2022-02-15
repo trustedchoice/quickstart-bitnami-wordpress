@@ -812,12 +812,19 @@
                         "Key": "Name",
                         "Value": "WordpressALB"
                     }
-                ]
+                ],
+                "Scheme": "internal"
             }
         },
         "ALBTargetGroup": {
             "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
             "Properties": {
+                "Name": {
+                    "Fn::GetAtt": [
+                        "ApplicationLoadBalancer",
+                        "LoadBalancerName"
+                    ]
+                },
                 "HealthCheckIntervalSeconds": 30,
                 "HealthCheckTimeoutSeconds": 5,
                 "HealthyThresholdCount": 2,
@@ -1127,7 +1134,12 @@
                                 "\n# PROVISIONER_PEER_ADDRESS=",
                                 {
                                     "Ref": "DBEndpointAddress"
-                                }
+                                },
+                                "\nsed -i '\/DocumentRoot \\/opt\\/bitnami\\/wordpress/a   Alias \\/advantage\\/ \"\\/opt\\/bitnami\\/wordpress\\/\"' /opt/bitnami/apache/conf/vhosts/wordpress-vhost.conf",
+                                "\nsed -i '\/DocumentRoot \\/opt\\/bitnami\\/wordpress/a   Alias \\/advantage \"\\/opt\\/bitnami\\/wordpress\"' /opt/bitnami/apache/conf/vhosts/wordpress-vhost.conf",
+                                "\nsed -i '\/    RewriteBase \\//c     RewriteBase \\/advantage\\/' /opt/bitnami/apache/conf/vhosts/wordpress-vhost.conf",
+                                "\nsed -i '\/    RewriteRule ^index/c     RewriteRule ^advantage\\/index\\\\.php$ - [L]' /opt/bitnami/apache/conf/vhosts/wordpress-vhost.conf",
+                                "\nsudo /opt/bitnami/scripts/apache/restart.sh"
                             ]
                         ]
                     }
